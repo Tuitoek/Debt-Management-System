@@ -1,16 +1,19 @@
 import { useState } from 'react'
+import LandingHero from './components/LandingHero'
+import SalaryCalculator from './components/SalaryCalculator'
+import './App.css'
 
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-  <div>
-    <h2> Hey Sarah</h2>
-    <p>You are about to eat heavy with this project</p>
-    <p>Love You</p>
-     </div>
-  )
+    <div>
+        <LandingHero />
+<SalaryCalculator />
+    </div>
+
+)
 }
 
 export default App

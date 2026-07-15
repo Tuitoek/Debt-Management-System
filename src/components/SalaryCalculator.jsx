@@ -2,7 +2,7 @@ import React from "react";
 
 function SalaryCalculator() {
   return (
-    <div className="w-100 h-65 rounded-lg bg-gray-100 shadow-md p-10 m-10 flex justify-content-center flex-col">
+    <div className="w-100 h-65 rounded-lg bg-gradient-to-r from-blue-400 to-green-600 shadow-md p-10 m-10 flex justify-content-center flex-col">
       <span>
         <h2 className="font-bold text-2xl">Salary Calculator</h2>
         <p className="font-light text-l">Based on Kenyan PAYE system</p>

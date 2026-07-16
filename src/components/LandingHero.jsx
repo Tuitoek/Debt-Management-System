@@ -11,7 +11,7 @@ function LandingHero() {
       text-6xl font-bold align-center">
         Debt Management System
       </h1>
-      <h3 className="text-3xl font-light text-center">
+      <h3 className="text-3xl font-semibold text-gray-600 text-center">
         Take control of your finances with smart debt tracking, expense
         management & savings planning
       </h3>

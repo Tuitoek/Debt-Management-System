@@ -1,0 +1,25 @@
+//Server initialization
+const express = require("express");
+const cors = require('cors');
+
+const app = express();
+
+//Middleware
+app.use(cors());//allows requests from React frontend
+app.use(express.json());//Parse incoming JSON requests
+
+//Routes
+app.get('/api/hello', (req, res) => {
+  res.json({ message: 'Hello from the server!' });
+});
+
+app.post('/api/data', (req, res) => {
+  console.log(req.body);
+  res.json({received: true, data: req.body});
+});
+
+//Start the server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

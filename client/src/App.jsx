@@ -12,24 +12,28 @@ function App() {
   const [deductSHIF, setDeductSHIF] = useState(false);
   const [deductHousingLevy, setDeductHousingLevy] = useState(false);
   const [deductNSSF, setDeductNSSF] = useState(false);
+  const [payeResult, setPayeResult] = useState(null);
   const [message, setMessage] = useState("");
 
   // Calculate net salary via backend API
   const handleCalculateNetSalary = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/calculate-net-salary", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          grossSalary,
-          otherAllowances,
-          deductSHIF,
-          deductHousingLevy,
-          deductNSSF,
-        }),
-      });
+      const res = await fetch(
+        "http://localhost:5000/api/calculate-net-salary",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            grossSalary,
+            otherAllowances,
+            deductSHIF,
+            deductHousingLevy,
+            deductNSSF,
+          }),
+        },
+      );
       const result = await res.json();
-      setNetSalary(result.netSalary);
+      setPayeResult(result); // store the whole breakdown, not just one number
     } catch (error) {
       console.error("Error calculating net salary:", error);
     }
@@ -66,7 +70,17 @@ function App() {
           setDeductHousingLevy={setDeductHousingLevy}
           onCalculate={handleCalculateNetSalary}
         />
-        <NetSalary netSalary={netSalary} />
+        {payeResult && (
+          <NetSalary
+            grossSalary={payeResult.grossSalary}
+            otherAllowances={payeResult.otherAllowances}
+            deductSHIF={payeResult.deductSHIF}
+            deductHousingLevy={payeResult.deductHousingLevy}
+            deductNSSF={payeResult.deductNSSF}
+            netSalary={payeResult.netSalary}
+            paye={payeResult.paye}
+          />
+        )}
       </span>
       <Navbar />
     </div>

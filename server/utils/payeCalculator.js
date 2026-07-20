@@ -1,0 +1,7 @@
+// Unchangeable PAYE Calculator Variables
+const PERSONAL_RELIEF = 2400;
+const NSSF_RATE = 0.06;
+const NSSF_CAP_EARNINGS = 108000;
+const NSSF_MAX_CONTRIBUTION = NSSF_CAP_EARNINGS * NSSF_RATE;
+const SHIF_RATE = 0.0275;
+const HOUSING_LEVY_RATE = 0.015;

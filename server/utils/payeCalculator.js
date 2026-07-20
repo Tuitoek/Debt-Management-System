@@ -30,13 +30,14 @@ function calculatePAYE(taxableIncome){
     return Math.max(tax - PERSONAL_RELIEF, 0);
 }
 
-export function calculateNetSalary(grossSalary {
-    grossSalary = parseFloat(grossSalary);
-    otherAllowances = parseFloat(otherAllowances) || 0;
-    deductSHIF = false,
-    deductHousingLevy = false,
-    deductNSSF = false,
-}){
+function calculateNetSalary({
+    grossSalary = parseFloat(grossSalary),
+    otherAllowances = parseFloat(otherAllowances) || 0,
+    deductSHIF = !!deductSHIF,
+    deductHousingLevy = !!deductHousingLevy,
+    deductNSSF = !!deductNSSF,
+})
+{
     // Calculate the gross salary including other allowances
     const gross = Number(grossSalary) + Number(otherAllowances);
 
@@ -65,3 +66,5 @@ export function calculateNetSalary(grossSalary {
         totalDeductions: round(totalDeductions),
     };
 }
+
+module.exports = { calculateNetSalary };

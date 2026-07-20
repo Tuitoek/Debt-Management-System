@@ -3,15 +3,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalculator,
   faMoneyBill,
-  faCreditCard,
   faPlusCircle,
-  faPlus,
   faHandHoldingMedical,
   faHandHoldingHeart,
   faHouse,
 } from "@fortawesome/free-solid-svg-icons";
 
-function SalaryCalculator() {
+function SalaryCalculator({
+  grossSalary,
+  setGrossSalary,
+  otherAllowances,
+  setOtherAllowances,
+  deductSHIF,
+  setDeductSHIF,
+  deductNSSF,
+  setDeductNSSF,
+  deductHousingLevy,
+  setDeductHousingLevy,
+  onCalculate,
+}) {
+  const handleSubmit = (e) => {
+    e.preventDefault(); // stop the browser's native form submission
+    onCalculate();
+  };
+
   return (
     <div
       className="w-100 h-auto
@@ -24,7 +39,7 @@ function SalaryCalculator() {
       </span>
       <p className="font-light text-l">Based on Kenyan PAYE system</p>
 
-      <form className="flex flex-col gap-4 pt-2" action="" method="post">
+      <form className="flex flex-col gap-4 pt-2" onSubmit={handleSubmit}>
         <span>
           <FontAwesomeIcon icon={faMoneyBill} className="mr-2" />
           <label htmlFor="Gross Salary">Monthly Gross Salary (KES)</label>
@@ -33,7 +48,9 @@ function SalaryCalculator() {
             type="number"
             id="Gross Salary"
             name="Gross Salary"
-            type="required"
+            required
+            value={grossSalary}
+            onChange={(e) => setGrossSalary(e.target.value)}
             placeholder=" Enter your Gross Salary"
           />
         </span>
@@ -47,29 +64,44 @@ function SalaryCalculator() {
               type="number"
               id="Other Allowance"
               name="Other Allowance"
+              value={otherAllowances}
+              onChange={(e) => setOtherAllowances(e.target.value)}
               placeholder=" Enter your Other Allowance If any"
             />
-            <button type="submit">
-              <FontAwesomeIcon icon={faPlusCircle} className="mr-2 text-xl" />
-            </button>
           </span>
         </span>
+
         <span className="flex flex-row items-center gap-2">
-          <input className="" type="checkbox" id="SHIF  " name="SHIF" />
+          <input
+            type="checkbox"
+            id="SHIF"
+            name="SHIF"
+            checked={deductSHIF}
+            onChange={(e) => setDeductSHIF(e.target.checked)}
+          />
           <FontAwesomeIcon icon={faHandHoldingMedical} className="mr-2" />
           <label htmlFor="SHIF">Deduct SHIF</label>
         </span>
+
         <span className="flex flex-row items-center gap-2">
-          <input className="" type="checkbox" id="NSSF" name="NSSF" />
+          <input
+            type="checkbox"
+            id="NSSF"
+            name="NSSF"
+            checked={deductNSSF}
+            onChange={(e) => setDeductNSSF(e.target.checked)}
+          />
           <FontAwesomeIcon icon={faHandHoldingHeart} className="mr-2" />
           <label htmlFor="NSSF">Deduct NSSF</label>
         </span>
+
         <span className="flex flex-row items-center gap-2">
           <input
-            className=""
             type="checkbox"
             id="Housing Levy"
             name="Housing Levy"
+            checked={deductHousingLevy}
+            onChange={(e) => setDeductHousingLevy(e.target.checked)}
           />
           <FontAwesomeIcon icon={faHouse} className="mr-2" />
           <label htmlFor="Housing Levy">Deduct Housing Levy</label>
@@ -77,7 +109,7 @@ function SalaryCalculator() {
 
         <span>
           <button
-            className=" w-full h-10 bg-blue-700 font-semibold py-2 px-4 rounded text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            className="w-full h-10 bg-blue-700 font-semibold py-2 px-4 rounded text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
             type="submit"
           >
             Calculate Net Salary

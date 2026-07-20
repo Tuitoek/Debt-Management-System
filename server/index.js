@@ -1,8 +1,8 @@
 //Server initialization
 const express = require("express");
 const cors = require('cors');
-
 const app = express();
+const path = require('path');
 
 //Middleware
 app.use(cors());//allows requests from React frontend
@@ -20,7 +20,7 @@ app.post('/api/data', (req, res) => {
 
 //Serving the react build from Express
 app.use(express.static(path.join(__dirname, '../client/build')));
-app.get('*', (req, res) => {
+app.get('/*splat', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
 
@@ -29,3 +29,7 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+
+const payeRoutes = require('./routes/paye.js');
+app.use('/api', payeRoutes);  

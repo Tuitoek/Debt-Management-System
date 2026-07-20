@@ -16,7 +16,7 @@ function NetSalary() {
       className="w-150 h-auto
      rounded-lg bg-white
      shadow-md p-10 m-10 flex justify-content-center 
-     flex-col gap-5"
+     flex-col gap-5 hidden"
     >
       <h2 className="font-bold text-2xl text-center">Net Salary</h2>
       <p className="font-light text-l text-center">

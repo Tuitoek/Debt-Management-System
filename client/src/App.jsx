@@ -45,7 +45,7 @@ function App() {
   return (
     <div className="p-5 gap-5">
       <LandingHero />
-      <span className="flex flex-row justify-content-center gap-5">
+      <span className="flex flex-row items-center justify-center gap-5">
         <SalaryCalculator />
         <NetSalary />
       </span>

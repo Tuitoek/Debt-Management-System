@@ -1,21 +1,32 @@
 import React from "react";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCalculator,
+  faMoneyBill,
+  faCreditCard,
+  faPlusCircle,
+  faPlus,
+  faHandHoldingMedical,
+  faHandHoldingHeart,
+  faHouse,
+} from "@fortawesome/free-solid-svg-icons";
 
 function SalaryCalculator() {
-
   return (
     <div
       className="w-100 h-auto
      rounded-lg bg-gradient-to-r from-blue-400 to-green-600 
-     shadow-md p-10 m-10 flex justify-content-center flex-col"
+     shadow-md p-10 flex justify-content-center flex-col gap-1 m-3"
     >
-      <span>
+      <span className="flex flex-row items-center gap-2 mb-5">
+        <FontAwesomeIcon icon={faCalculator} className="mr-2 text-2xl" />
         <h2 className="font-bold text-2xl">Salary Calculator</h2>
-        <p className="font-light text-l">Based on Kenyan PAYE system</p>
       </span>
+      <p className="font-light text-l">Based on Kenyan PAYE system</p>
 
-      <form className="flex flex-col p-4 gap-2" action="" method="post">
+      <form className="flex flex-col gap-4 pt-2" action="" method="post">
         <span>
+          <FontAwesomeIcon icon={faMoneyBill} className="mr-2" />
           <label htmlFor="Gross Salary">Monthly Gross Salary (KES)</label>
           <input
             className="bg-white rounded-sm w-full h-10 text-m font-light"
@@ -28,25 +39,39 @@ function SalaryCalculator() {
         </span>
 
         <span>
+          <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />
           <label htmlFor="Other Allowance">Other Allowance (KES)</label>
-          <input
-            className="bg-white rounded-sm w-full h-10 text-m font-light"
-            type="number"
-            id="Other Allowance"
-            name="Other Allowance"
-            placeholder=" Enter your Other Allowance If any"
-          />
+          <span className="flex flex-row items-center gap-2">
+            <input
+              className="bg-white rounded-sm w-full h-10 text-m font-light"
+              type="number"
+              id="Other Allowance"
+              name="Other Allowance"
+              placeholder=" Enter your Other Allowance If any"
+            />
+            <button type="submit">
+              <FontAwesomeIcon icon={faPlusCircle} className="mr-2 text-xl" />
+            </button>
+          </span>
         </span>
-        <span>
+        <span className="flex flex-row items-center gap-2">
           <input className="" type="checkbox" id="SHIF  " name="SHIF" />
+          <FontAwesomeIcon icon={faHandHoldingMedical} className="mr-2" />
           <label htmlFor="SHIF">Deduct SHIF</label>
         </span>
-        <span>
+        <span className="flex flex-row items-center gap-2">
           <input className="" type="checkbox" id="NSSF" name="NSSF" />
+          <FontAwesomeIcon icon={faHandHoldingHeart} className="mr-2" />
           <label htmlFor="NSSF">Deduct NSSF</label>
         </span>
-        <span>
-          <input className="" type="checkbox" id="Housing Levy" name="Housing Levy" />
+        <span className="flex flex-row items-center gap-2">
+          <input
+            className=""
+            type="checkbox"
+            id="Housing Levy"
+            name="Housing Levy"
+          />
+          <FontAwesomeIcon icon={faHouse} className="mr-2" />
           <label htmlFor="Housing Levy">Deduct Housing Levy</label>
         </span>
 

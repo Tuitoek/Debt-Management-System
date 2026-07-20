@@ -18,6 +18,12 @@ app.post('/api/data', (req, res) => {
   res.json({received: true, data: req.body});
 });
 
+//Serving the react build from Express
+app.use(express.static(path.join(__dirname, '../client/build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
+
 //Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

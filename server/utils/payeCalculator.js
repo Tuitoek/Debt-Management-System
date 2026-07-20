@@ -19,7 +19,7 @@ function calculatePAYE(taxableIncome){
     let previousLimit = 0;
 
     for (const band of TAX_BANDS) { 
-        if(taxableIncome > band.limit){
+        if(taxableIncome > previousLimit){
          const taxableInBand = Math.min(taxableIncome, band.limit) - previousLimit;
          tax += taxableInBand * band.rate;
          previousLimit = band.limit;
@@ -31,11 +31,11 @@ function calculatePAYE(taxableIncome){
 }
 
 function calculateNetSalary({
-    grossSalary = parseFloat(grossSalary),
-    otherAllowances = parseFloat(otherAllowances) || 0,
-    deductSHIF = !!deductSHIF,
-    deductHousingLevy = !!deductHousingLevy,
-    deductNSSF = !!deductNSSF,
+    grossSalary,
+    otherAllowances = 0,
+    deductSHIF = false,
+    deductHousingLevy = false,
+    deductNSSF = false,
 })
 {
     // Calculate the gross salary including other allowances

@@ -1,10 +1,13 @@
 import React from "react";
 
+
 function SalaryCalculator() {
+
   return (
     <div
       className="w-100 h-auto
-     rounded-lg bg-gradient-to-r from-blue-400 to-green-600 shadow-md p-10 m-10 flex justify-content-center flex-col"
+     rounded-lg bg-gradient-to-r from-blue-400 to-green-600 
+     shadow-md p-10 m-10 flex justify-content-center flex-col"
     >
       <span>
         <h2 className="font-bold text-2xl">Salary Calculator</h2>

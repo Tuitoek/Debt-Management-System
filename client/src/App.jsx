@@ -3,6 +3,7 @@ import LandingHero from "./components/LandingHero";
 import SalaryCalculator from "./components/SalaryCalculator";
 import Navbar from "./components/Navbar";
 import Infinity from "./components/Infinity";
+import NetSalary from "./components/NetSalary";
 import "./App.css";
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
 
     fetchData();
   }, []);
-  
+
   //Calling node server to send data to the backend
   fetch("http://localhost:5000/api/data", {
     method: "POST",
@@ -44,7 +45,11 @@ function App() {
   return (
     <div className="p-5 gap-5">
       <LandingHero />
-      <SalaryCalculator />
+      <span className="flex flex-row justify-content-center gap-5">
+        <SalaryCalculator />
+        <NetSalary />
+      </span>
+
       <Navbar />
     </div>
   );

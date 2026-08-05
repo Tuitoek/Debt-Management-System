@@ -10,20 +10,12 @@ import {
   faHandHoldingHeart,
 } from "@fortawesome/free-solid-svg-icons";
 
-function NetSalary() {
+function NetSalary({result}) {
     // Avoid rendering the component if result is null or undefined
     if(!result) return null; // safety net, shouldn't render if no data
 
-    const { 
-        gross, 
-        nssf, 
-        shif, 
-        housing, 
-        paye, 
-        totalDeductions, 
-        netSalary } = result;
+   const { gross, nssf, shif, housingLevy, paye, netSalary, totalDeductions } = result;
    
-
   return (
     <div
       className="w-150 h-auto
@@ -42,7 +34,7 @@ function NetSalary() {
         <span className="flex items-center gap-2">
           <FontAwesomeIcon icon={faMoneyBillWave} className="mr-2" />
           <h3>Gross Salary:</h3>
-          <span className="font-light">KES {grossSalary.toLocaleString()}</span>
+          <span className="font-light">KES {gross.toLocaleString()}</span>
         </span>
       </p>
       <p
@@ -52,7 +44,7 @@ function NetSalary() {
         <span className="flex items-center gap-2">
           <FontAwesomeIcon icon={faHandHoldingHeart} className="mr-2" />
           <h3>NSSF Deduction:</h3>
-          <span className="font-light">KES {nssfDeduction.toLocaleString()}</span>
+          <span className="font-light">KES {nssf.toLocaleString()}</span>
         </span>
       </p>
       <p
@@ -62,7 +54,7 @@ function NetSalary() {
         <span className="flex items-center gap-2">
           <FontAwesomeIcon icon={faHandHoldingMedical} className="mr-2" />
           <h3>SHIF Deduction:</h3>
-          <span className="font-light">KES {shifDeduction.toLocaleString()} </span>
+          <span className="font-light">KES {shif.toLocaleString()} </span>
         </span>
       </p>
       <p
@@ -72,7 +64,7 @@ function NetSalary() {
         <span className="flex items-center gap-2">
           <FontAwesomeIcon icon={faLandmark} className="mr-2" />
           <h3>Housing Levy Deduction:</h3>
-          <span className="font-light">KES {housingLevyDeduction.toLocaleString()}</span>
+          <span className="font-light">KES {housingLevy.toLocaleString()}</span>
         </span>
       </p>
       <p
@@ -82,7 +74,7 @@ function NetSalary() {
         <span className="flex items-center gap-2">
           <FontAwesomeIcon icon={faHandHoldingUsd} className="mr-2" />
           <h3>PAYE Deduction:</h3>
-          <span className="font-light">KES {payeDeduction.toLocaleString()}</span>
+          <span className="font-light">KES {paye.toLocaleString()}</span>
         </span>
       </p>
       <p

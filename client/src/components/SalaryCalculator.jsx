@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalculator,
@@ -9,30 +9,43 @@ import {
   faHouse,
 } from "@fortawesome/free-solid-svg-icons";
 
-function SalaryCalculator({
-  grossSalary,
-  setGrossSalary,
-  otherAllowances,
-  setOtherAllowances,
-  deductSHIF,
-  setDeductSHIF,
-  deductNSSF,
-  setDeductNSSF,
-  deductHousingLevy,
-  setDeductHousingLevy,
-  onCalculate,
-}) {
-  const handleSubmit = (e) => {
-    e.preventDefault(); // stop the browser's native form submission
-    onCalculate();
+function SalaryCalculator({ onCalculate }) {
+  // 1. Initialized with boolean true instead of string "true"
+  const [formData, setFormData] = useState({
+    grossSalary: "",
+    otherAllowances: "",  
+    deductSHIF: true,
+    deductHousingLevy: true,
+    deductNSSF: true,
+  });
+
+  // 2. Generic change handler for inputs & checkboxes
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:5000/api/calculate-net-salary', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+      if (onCalculate) onCalculate(data);
+    } catch (err) {
+      console.error("Failed to connect to backend:", err);
+    }
   };
 
   return (
-    <div
-      className="w-100 h-auto
-     rounded-lg bg-gradient-to-r from-blue-400 to-green-600 
-     shadow-md p-10 flex justify-content-center flex-col gap-1 m-3"
-    >
+    <div className="w-100 h-auto rounded-lg bg-gradient-to-r from-blue-400 to-green-600 shadow-md p-10 flex justify-content-center flex-col gap-1 m-3">
       <span className="flex flex-row items-center gap-2 mb-5">
         <FontAwesomeIcon icon={faCalculator} className="mr-2 text-2xl" />
         <h2 className="font-bold text-2xl">Salary Calculator</h2>
@@ -42,30 +55,30 @@ function SalaryCalculator({
       <form className="flex flex-col gap-4 pt-2" onSubmit={handleSubmit}>
         <span>
           <FontAwesomeIcon icon={faMoneyBill} className="mr-2" />
-          <label htmlFor="Gross Salary">Monthly Gross Salary (KES)</label>
+          <label htmlFor="grossSalary">Monthly Gross Salary (KES)</label>
           <input
-            className="bg-white rounded-sm w-full h-10 text-m font-light"
+            className="bg-white rounded-sm w-full h-10 text-m font-light px-2"
             type="number"
-            id="Gross Salary"
-            name="Gross Salary"
+            id="grossSalary"
+            name="grossSalary" /* Match state key */
             required
-            value={grossSalary}
-            onChange={(e) => setGrossSalary(e.target.value)}
+            value={formData.grossSalary}
+            onChange={handleChange} /* Fixed handler */
             placeholder=" Enter your Gross Salary"
           />
         </span>
 
         <span>
           <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />
-          <label htmlFor="Other Allowance">Other Allowance (KES)</label>
+          <label htmlFor="otherAllowances">Other Allowance (KES)</label>
           <span className="flex flex-row items-center gap-2">
             <input
-              className="bg-white rounded-sm w-full h-10 text-m font-light"
+              className="bg-white rounded-sm w-full h-10 text-m font-light px-2"
               type="number"
-              id="Other Allowance"
-              name="Other Allowance"
-              value={otherAllowances}
-              onChange={(e) => setOtherAllowances(e.target.value)}
+              id="otherAllowances"
+              name="otherAllowances" /* Match state key */
+              value={formData.otherAllowances}
+              onChange={handleChange} /* Fixed handler */
               placeholder=" Enter your Other Allowance If any"
             />
           </span>
@@ -74,37 +87,37 @@ function SalaryCalculator({
         <span className="flex flex-row items-center gap-2">
           <input
             type="checkbox"
-            id="SHIF"
-            name="SHIF"
-            checked={deductSHIF}
-            onChange={(e) => setDeductSHIF(e.target.checked)}
+            id="deductSHIF"
+            name="deductSHIF" /* Match state key */
+            checked={formData.deductSHIF}
+            onChange={handleChange} /* Fixed handler */
           />
           <FontAwesomeIcon icon={faHandHoldingMedical} className="mr-2" />
-          <label htmlFor="SHIF">Deduct SHIF</label>
+          <label htmlFor="deductSHIF">Deduct SHIF</label>
         </span>
 
         <span className="flex flex-row items-center gap-2">
           <input
             type="checkbox"
-            id="NSSF"
-            name="NSSF"
-            checked={deductNSSF}
-            onChange={(e) => setDeductNSSF(e.target.checked)}
+            id="deductNSSF"
+            name="deductNSSF" /* Match state key */
+            checked={formData.deductNSSF}
+            onChange={handleChange} /* Fixed handler */
           />
           <FontAwesomeIcon icon={faHandHoldingHeart} className="mr-2" />
-          <label htmlFor="NSSF">Deduct NSSF</label>
+          <label htmlFor="deductNSSF">Deduct NSSF</label>
         </span>
 
         <span className="flex flex-row items-center gap-2">
           <input
             type="checkbox"
-            id="Housing Levy"
-            name="Housing Levy"
-            checked={deductHousingLevy}
-            onChange={(e) => setDeductHousingLevy(e.target.checked)}
+            id="deductHousingLevy"
+            name="deductHousingLevy" /* Match state key */
+            checked={formData.deductHousingLevy}
+            onChange={handleChange} /* Fixed handler */
           />
           <FontAwesomeIcon icon={faHouse} className="mr-2" />
-          <label htmlFor="Housing Levy">Deduct Housing Levy</label>
+          <label htmlFor="deductHousingLevy">Deduct Housing Levy</label>
         </span>
 
         <span>

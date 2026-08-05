@@ -38,7 +38,11 @@ function SalaryCalculator({ onCalculate }) {
       });
 
       const data = await response.json();
-      if (onCalculate) onCalculate(data);
+
+      // Call the onCalculate prop function to send data back to App.jsx
+      if (onCalculate) {
+        onCalculate(data);
+      }
     } catch (err) {
       console.error("Failed to connect to backend:", err);
     }

@@ -7,56 +7,23 @@ import Debtlist from "./components/Debtlist";
 import "./App.css";
 
 function App() {
-  const [netSalary, setNetSalary] = useState(null);
-  const [grossSalary, setGrossSalary] = useState("");
-  const [otherAllowances, setOtherAllowances] = useState("");
-  const [deductSHIF, setDeductSHIF] = useState(false);
-  const [deductHousingLevy, setDeductHousingLevy] = useState(false);
-  const [deductNSSF, setDeductNSSF] = useState(false);
+ // Calculate net salary via backend API
   const [payeResult, setPayeResult] = useState(null);
-  const [message, setMessage] = useState("");
 
-  // Calculate net salary via backend API
-  const handleCalculateNetSalary = async () => {
-    const res = await fetch("http://localhost:5000/api/calculate-net-salary", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        grossSalary,
-        otherAllowances,
-        deductSHIF,
-        deductHousingLevy,
-        deductNSSF,
-      }),
-    });
-    const result = await res.json();
-    // Store Paye Result
-    setPayeResult(result);
-    try {}catch (error) {
-      console.error("Error calculating net salary:", error);
-      setMessage("Failed to calculate net salary. Please try again.");
-    }
-  }
+  // Receive calculated data directly from SalaryCalculator
+  const handleCalculateNetSalary = (data) => {
+    console.log("Data received in App.jsx:", data); // Debug log
+    setPayeResult(data);
+  };
   
   return (
     <div className="p-5 gap-5">
       <LandingHero />
       <span className="flex flex-row items-center justify-center gap-5">
-        <SalaryCalculator
-          grossSalary={grossSalary}
-          setGrossSalary={setGrossSalary}
-          otherAllowances={otherAllowances}
-          setOtherAllowances={setOtherAllowances}
-          deductSHIF={deductSHIF}
-          setDeductSHIF={setDeductSHIF}
-          deductNSSF={deductNSSF}
-          setDeductNSSF={setDeductNSSF}
-          deductHousingLevy={deductHousingLevy}
-          setDeductHousingLevy={setDeductHousingLevy}
-          onCalculate={handleCalculateNetSalary}
-        />
+       {/* Pass handler to receive result */}
+        <SalaryCalculator onCalculate={handleCalculateNetSalary} />
+
+        {/* Display NetSalary once payeResult is populated */}
         {payeResult && <NetSalary result={payeResult} />}
       </span>
       <Navbar />

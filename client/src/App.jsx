@@ -3,6 +3,7 @@ import LandingHero from "./components/LandingHero";
 import SalaryCalculator from "./components/SalaryCalculator";
 import Navbar from "./components/Navbar";
 import NetSalary from "./components/NetSalary";
+import Debtlist from "./components/Debtlist";
 import "./App.css";
 
 function App() {
@@ -83,6 +84,7 @@ function App() {
         )}
       </span>
       <Navbar />
+      <Debtlist />
     </div>
   );
 }

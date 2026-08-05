@@ -9,27 +9,19 @@ app.use(cors());//allows requests from React frontend
 app.use(express.json());//Parse incoming JSON requests
 
 //Routes
-app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello from the server!' });
-});
-
-app.post('/api/data', (req, res) => {
-  console.log(req.body);
-  res.json({received: true, data: req.body});
-});
-
-//Serving the react build from Express
-app.use(express.static(path.join(__dirname, '../client/build')));
-app.get('/*splat', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
-});
-
-//Start the server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// First route to handle requests api/debts
+app.get('/api/debts', (req, res) => {
+    // Sample data for debts
+    const debts = [
+        { id: 1, name: 'Loan A', amount: 13000, dueDate: '2026-08-12', repaymentSchedule: 'Once a month' },
+        { id: 2, name: 'Loan B', amount: 25000, dueDate: '2026-12-31', repaymentSchedule: 'Monthly' }
+    ];
+    res.json(debts);
 });
 
 
-const payeRoutes = require('./routes/paye.js');
-app.use('/api', payeRoutes);  
+app.listen(5000, () =>{
+  console.log("Server is running on port 5000")
+})
+
+

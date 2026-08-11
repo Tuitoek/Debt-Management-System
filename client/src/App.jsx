@@ -28,8 +28,10 @@ function App() {
         {payeResult && <NetSalary result={payeResult} />}
       </span>
       <Navbar />
-      <Debtlist />
-      <DebtForm />
+      <span className="flex flex-row justify-center gap-5 p-5">
+        <DebtForm />
+        <Debtlist />
+      </span>
     </div>
   );
 }

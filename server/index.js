@@ -4,7 +4,7 @@ const cors = require('cors');
 const app = express();
 const path = require('path');
 
-const payeCalculator = require('./utils/payeCalculator.js');
+// Importing routes
 const debtsRoutes = require('./routes/debtsRoutes.js');
 const salaryRoutes = require('./routes/salaryRoutes.js');
 

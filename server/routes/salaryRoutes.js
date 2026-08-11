@@ -22,7 +22,7 @@ router.post("/calculate-net-salary", async (req, res) => {
   
       res.json(result);
     } catch (error) {
-      console.error("Detailed Backend Error:", error); // Check Node terminal to see exact stack trace
+      console.error("Detailed Backend Error:", error); 
       res.status(500).json({ error: "Failed to calculate net salary" });
     }
 });

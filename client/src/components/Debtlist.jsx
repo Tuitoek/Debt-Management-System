@@ -9,6 +9,9 @@ import {
   faMoneyBill,
   faPlusCircle,
   faMinusCircle,
+  faPencilAlt,
+  faPenToSquare,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
 function Debtlist() {
@@ -37,7 +40,11 @@ function Debtlist() {
             key={debt.id}
           >
             <span className="font-bold text-lg p-2 w-auto h-auto bg-blue-200 text-black rounded-md">
-              Loan Name: {debt.name}
+              Loan Name: {debt.name} 
+              <span className="text-left ml-12">
+             <FontAwesomeIcon icon = {faPenToSquare} className="ml-2 text-green-600"/>
+            <FontAwesomeIcon icon = {faTrash} className="ml-2 text-red-600"/>
+            </span>
             </span>
                <span className="ml-2 w-auto h-auto border border-gray-300 rounded-md p-1 text-black">
               {" "}

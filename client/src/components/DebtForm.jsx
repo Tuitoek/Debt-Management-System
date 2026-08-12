@@ -15,7 +15,7 @@ const DebtForm = () => {
   };
 
   return (
-    <div className='p-5 w-100 h-auto border border-gray-300 rounded shadow-md bg-white'>
+    <div className='p-5 w-100 h-150 border border-gray-300 rounded shadow-md bg-white'>
         <form className='flex flex-col gap-5 p-4' onSubmit={handleSubmit}       >
             <h3 className='text-lg font-bold'>Add New Debt</h3>
             <input type="text" placeholder='Enter debt name' className='p-2 border border-gray-300 rounded' value={debtName} onChange={(e) => setDebtName(e.target.value)}/>

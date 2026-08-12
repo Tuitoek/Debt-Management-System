@@ -23,6 +23,15 @@ router.get("/", (req, res) => {
       dueDate: "2026-12-31",
       repaymentSchedule: 6,
     },
+    {
+      id: 3,
+      name: "Loan C",
+      amount: 3000,
+      installmentAmount: 1,
+      outstandingAmount: 3000,
+      dueDate: "2027-10-31",
+      repaymentSchedule: 1,
+    },
   ];
   res.json(debts);
 });

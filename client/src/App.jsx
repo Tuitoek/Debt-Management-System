@@ -28,7 +28,7 @@ function App() {
         {payeResult && <NetSalary result={payeResult} />}
       </span>
       <Navbar />
-      <span className="flex flex-row justify-center gap-5 p-5">
+      <span className="flex flex-row  space-x-5 p-5">
         <DebtForm />
         <Debtlist />
       </span>

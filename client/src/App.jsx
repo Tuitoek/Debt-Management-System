@@ -15,13 +15,14 @@ function App() {
   const [payeResult, setPayeResult] = useState(null);
 
   // Render Login Form when user clicks loginbutton
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [showLogin, setShowlogin] = useState(false);
 
-  if(isLoggingIn){
-    return (
-      <Login //Prop so form can hide itself when cancelled
-      onClose={() => setIsLoggingIn(false) }/>
-    )
+  const openLogin = () =>{
+    setShowlogin(true);
+  }
+
+  if(showLogin){
+    return <LogIn onClose = {setShowlogin(false)} />
   }
 
   // Receive calculated data directly from SalaryCalculator

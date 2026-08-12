@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Box, TextField, Button, Typography } from "@mui/material";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-const LogIn = () => {
+const LogIn = ({onClose}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -57,6 +57,7 @@ const LogIn = () => {
         </Box>
       </Box>
     </Container>
+    <button type="button" onClick={onClose}> Back to Page</button>
     </div>
   );
 };

@@ -14,6 +14,16 @@ function App() {
   // Calculate net salary via backend API
   const [payeResult, setPayeResult] = useState(null);
 
+  // Render Login Form when user clicks loginbutton
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+
+  if(isLoggingIn){
+    return (
+      <Login //Prop so form can hide itself when cancelled
+      onClose={() => setIsLoggingIn(false) }/>
+    )
+  }
+
   // Receive calculated data directly from SalaryCalculator
   const handleCalculateNetSalary = (data) => {
     console.log("Data received in App.jsx:", data); // Debug log
@@ -22,10 +32,12 @@ function App() {
 
   return (
     <div className="p-5 gap-5">
-      <LandingHero />
-      <span>
-        <LogInButton />
-        <SignUpButton />
+      <span className="flex flex-row flex-wrap gap-4 ">
+        <LandingHero />
+        <span className="flex flex-row gap-3 m-10">
+          <LogInButton />
+          <SignUpButton />
+        </span>
       </span>
 
       <span className="flex flex-row items-center justify-center gap-5">
@@ -36,7 +48,6 @@ function App() {
         {payeResult && <NetSalary result={payeResult} />}
       </span>
       <Navbar />
-      <Login />
       <span className="flex flex-row justify-center space-x-5 p-5">
         <DebtForm />
         <Debtlist />

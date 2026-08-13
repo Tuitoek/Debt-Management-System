@@ -56,7 +56,11 @@ app.post('/api/login', async (req, res) => {
             { expiresIn: '7d'}
         );
 
-    
+        res.json({
+            message: 'Login Successful',
+            token,
+            user: { id: user.id, name: user.name, email: user.email}
+        })
 
     } catch (error) {
         

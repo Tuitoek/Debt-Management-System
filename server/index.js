@@ -22,6 +22,13 @@ app.use('/api/debts', debtsRoutes);
 // Second route to handle requests api/calculate-net-salary
 app.use('/api', salaryRoutes);
 
+// Auth routes
+app.post('/api/signup', async (req, res) => { 
+
+});
+app.post('/api/login', async (req, res) => {  
+    
+});
 
 // Setting Up Database
 pool.query('SELECT NOW()', (err,res) =>{

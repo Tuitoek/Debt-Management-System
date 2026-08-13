@@ -31,3 +31,34 @@ app.post('/api/signup'), async (req,res) => {
     }
 }
 
+//LOGIN
+app.post('/api/login', async (req, res) => {
+    try {
+        const {email, password} = req.body;
+
+        // Find the user
+        const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+        if(result.rows.length === 0){
+            return res.status(400).json({ message: 'Invalid email. Enter correct Email'})
+        }
+
+        const user = result.rows[0];
+        // Compare entered password and hashed one in db
+        const validpassword = await bcrypt.compare(password, user.password);
+        if(!validPassword){
+            return res.status(400).json({message: 'Invalid Password! Please enter the correct password'});
+        }
+
+        // Create token proving this user is logged in
+        const token = jwt.sign(
+            { id: user.id, email: user.email },
+            process.env.JWT_SECRET,
+            { expiresIn: '7d'}
+        );
+
+    
+
+    } catch (error) {
+        
+    }
+})

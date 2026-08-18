@@ -32,7 +32,7 @@ function App() {
   };
 
   return (
-    <div className="p-5 gap-5">
+    <div className="p-5 gap-5 bg-white-100">
       <span className="flex flex-row flex-wrap gap-4 ">
         <LandingHero />
         <span className="flex flex-row gap-3 m-10">
@@ -40,7 +40,7 @@ function App() {
           <SignUpButton />
         </span>
       </span>
-
+<Login />
       <span className="flex flex-row items-center justify-center gap-5">
         {/* Pass handler to receive result */}
         <SalaryCalculator onCalculate={handleCalculateNetSalary} />

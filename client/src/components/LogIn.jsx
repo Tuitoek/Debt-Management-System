@@ -35,72 +35,13 @@ const LogIn = ({ onClose }) => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <Container 
-        className="border border-gray-300 rounded-lg bg-white p-6 shadow-md" 
-        maxWidth="xs"
-      >
-        <Box 
-          component="form" 
-          onSubmit={handleLogin}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
-            Sign In
-          </Typography>
-
-          {/* Display Firebase errors if present */}
-          {error && (
-            <Alert severity="error" sx={{ width: "100%", mb: 2 }}>
-              {error}
-            </Alert>
-          )}
-
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            type="email"
-            label="Email Address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            label="Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            disabled={loading}
-            sx={{ mt: 3, mb: 1 }}
-          >
-            {loading ? <CircularProgress size={24} color="inherit" /> : "Sign In"}
-          </Button>
-
-          <Button
-            fullWidth
-            variant="text"
-            color="secondary"
-            onClick={onClose}
-            disabled={loading}
-          >
-            Back to Page
-          </Button>
-        </Box>
-      </Container>
+    <div className="flex justify-center items-center h-screen bg-gray-100  ">
+      <form className='flex flex-col gap-5 p-4 border rounded-md border-gray-300 shadow-md' onSubmit={handleLogin}       >
+                  <h3 className='text-lg font-bold'>Login</h3>
+                  <input type="number" placeholder='Enter Email Address' className='p-2 border border-gray-300 rounded' value={email} onChange={(e) => setEmail(e.target.value)}/>
+                  <input type="password" placeholder='Enter Password' className='p-2 border border-gray-300 rounded' value={password} onChange={(e) => setPassword(e.target.value)}     />
+                  <button type="submit" className='bg-blue-800 text-white p-2 rounded'>Login</button>
+              </form>
     </div>
   );
 };

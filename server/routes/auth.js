@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require('../db');   // adjust path if this file is inside a routes/ folder
 
+
 // SIGNUP
 router.post('/signup', async (req, res) => {
   try {
@@ -46,7 +47,7 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign(
       { id: user.id, email: user.email },
-      process.env.JWT_SECRET,
+        process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
 

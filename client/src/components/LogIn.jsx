@@ -1,33 +1,33 @@
 import React, { useState } from "react";
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from "../context/AuthContext";
 
 const LogIn = ({ onClose }) => {
   // Form , Error and Login State
   const [form, setForm] = useState({
-    email: ' ' , 
-    password: ''
-  })
+    email: " ",
+    password: "",
+  });
   const [error, setError] = useState("");
   const { login } = useAuth();
 
-const handleChange = (e) =>{
-  setForm({...form, [e.target.name]: e.target.value});
-}
-const handleSubmit = async (e) =>{
-  e.preventDefault();
-  setError('');
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
 
-  try {
-      const res = await fetch('http://localhost:5000/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form)
+    try {
+      const res = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.message || 'Login failed');
+        setError(data.message || "Login failed");
         return;
       }
 
@@ -35,24 +35,52 @@ const handleSubmit = async (e) =>{
       login(data.user, data.token);
     } catch (err) {
       console.error(err);
-      setError('Something went wrong. Try again.');
+      setError("Something went wrong. Try again.");
     }
   };
 
-
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100  ">
-      <form onSubmit={handleSubmit}>
-      <h2>Log In</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div className="flex flex-wrap items-center justify-center">
+      <form
+        className="flex flex-col p-5 w-auto h-auto border border-gray-200 rounded-md shadow-md gap-2"
+        onSubmit={handleSubmit}
+      >
+        <h2 className="font-bold text-2xl">Log In</h2>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <span className="flex flex-col p-2 gap-1">
+          <p>Email</p>
+          <input
+            className="p-2 border border-gray-100 rounded-sm"
+            name="email"
+            type="email"
+            placeholder="Enter Your Email Address"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+        </span>
+        <span>
+          <p>Password</p>
+          <input
+            className="p-2 border border-gray-100 rounded-sm"
+            name="password"
+            type="password"
+            placeholder="Enter Your Password"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+        </span>
 
-      <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange} required />
-      <input name="password" type="password" placeholder="Password" value={form.password} onChange={handleChange} required />
-
-      <button type="submit">Log In</button>
-    </form>
+        <button
+          className="w-full  p-2 bg-green-900 border border-black rounded-sm text-white text-xl font-bold"
+          type="submit"
+        >
+          Log In
+        </button>
+      </form>
     </div>
   );
-}
+};
 
 export default LogIn;

@@ -8,21 +8,22 @@ import DebtForm from "./components/DebtForm";
 import Login from "./components/LogIn";
 import LogInButton from "./components/LogInButton";
 import SignUpButton from "./components/SignUpButton";
+import { useAuth } from './context/AuthContext';
 import "./App.css";
+import SignUp from "./components/SignUp";
 
 function App() {
   // Calculate net salary via backend API
   const [payeResult, setPayeResult] = useState(null);
+  const { user, logout } = useAuth();
 
-  // Render Login Form when user clicks loginbutton
-  const [showLogin, setShowlogin] = useState(false);
-
-  const openLogin = () =>{
-    setShowlogin(true);
-  }
-
-  if(showLogin){
-    return <LogIn onClose = {setShowlogin(false)} />
+  if(user){
+ return (
+      <div>
+        <h1>Welcome, {user.name}!</h1>
+        <button onClick={logout}>Log Out</button>
+      </div>
+    );
   }
 
   // Receive calculated data directly from SalaryCalculator
@@ -33,7 +34,9 @@ function App() {
 
   return (
     <div className="p-5 gap-5 bg-white-100">
-      <span className="flex flex-row flex-wrap gap-4 ">
+      <SignUp />
+      <Login />
+<span className="flex flex-row flex-wrap gap-4 ">
         <LandingHero />
         <span className="flex flex-row gap-3 m-10">
           <LogInButton />
@@ -53,6 +56,8 @@ function App() {
         <DebtForm />
         <Debtlist />
       </span>
+      
+      
     </div>
   );
 }

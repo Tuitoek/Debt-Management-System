@@ -15,8 +15,7 @@ const SignUp = () => {
   const { login } = useAuth();
 
   const handleChange = (e) => {
-    e.preventDefault();
-    setError("");
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   // Handle Submit Function for signup
@@ -97,7 +96,12 @@ const SignUp = () => {
           />
         </span>
 
-        <button className="w-full  p-2 bg-blue-900 border border-black rounded-sm text-white text-xl font-bold" type="submit">Create Account</button>
+        <button
+          className="w-full  p-2 bg-blue-900 border border-black rounded-sm text-white text-xl font-bold"
+          type="submit"
+        >
+          Create Account
+        </button>
       </form>
     </div>
   );

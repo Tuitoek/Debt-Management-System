@@ -74,6 +74,16 @@ const SignUp = () => {
           />
         </span>
         <span className="flex flex-col p-2 gap-1">
+          <p>Phone Number</p>
+          <input
+            className="p-2 border border-gray-100 rounded-sm"
+            name="phone"
+            placeholder="Enter Valid Phone No"
+            value={form.phone}
+            onChange={handleChange}
+          />
+        </span>
+        <span className="flex flex-col p-2 gap-1">
           <p> Password</p>
           <input
             className="p-2 border border-gray-100 rounded-sm"
@@ -83,16 +93,6 @@ const SignUp = () => {
             value={form.password}
             onChange={handleChange}
             required
-          />
-        </span>
-        <span className="flex flex-col p-2 gap-1">
-          <p>Phone Number</p>
-          <input
-            className="p-2 border border-gray-100 rounded-sm"
-            name="phone"
-            placeholder="Enter Valid Phone No"
-            value={form.phone}
-            onChange={handleChange}
           />
         </span>
 

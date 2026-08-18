@@ -1,49 +1,58 @@
 import React, { useState } from "react";
-import { 
-  Container, 
-  Box, 
-  TextField, 
-  Button, 
-  Typography, 
-  Alert, 
-  CircularProgress 
-} from "@mui/material";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useAuth } from '../context/AuthContext'
 
 const LogIn = ({ onClose }) => {
-  const [loading, setLoading] = useState(false);
+  // Form , Error and Login State
+  const [form, setForm] = useState({
+    email: ' ' , 
+    password: ''
+  })
   const [error, setError] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { login } = useAuth();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
+const handleChange = (e) =>{
+  setForm({...form, [e.target.name]: e.target.value});
+}
+const handleSubmit = async (e) =>{
+  e.preventDefault();
+  setError('');
 
-    const auth = getAuth();
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      alert("Logged in successfully!");
+  try {
+      const res = await fetch('http://localhost:5000/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message || 'Login failed');
+        return;
+      }
+
+      // save user + token into context (and localStorage, via AuthContext)
+      login(data.user, data.token);
     } catch (err) {
-      console.error("Error signing in:", err);
-      // Cleans up standard Firebase error strings for cleaner UI display
-      setError(err.message.replace("Firebase: ", ""));
-    } finally {
-      setLoading(false);
+      console.error(err);
+      setError('Something went wrong. Try again.');
     }
   };
 
+
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100  ">
-      <form className='flex flex-col gap-5 p-4 border rounded-md border-gray-300 shadow-md' onSubmit={handleLogin}       >
-                  <h3 className='text-lg font-bold'>Login</h3>
-                  <input type="number" placeholder='Enter Email Address' className='p-2 border border-gray-300 rounded' value={email} onChange={(e) => setEmail(e.target.value)}/>
-                  <input type="password" placeholder='Enter Password' className='p-2 border border-gray-300 rounded' value={password} onChange={(e) => setPassword(e.target.value)}     />
-                  <button type="submit" className='bg-blue-800 text-white p-2 rounded'>Login</button>
-              </form>
+      <form onSubmit={handleSubmit}>
+      <h2>Log In</h2>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+
+      <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange} required />
+      <input name="password" type="password" placeholder="Password" value={form.password} onChange={handleChange} required />
+
+      <button type="submit">Log In</button>
+    </form>
     </div>
   );
-};
+}
 
 export default LogIn;

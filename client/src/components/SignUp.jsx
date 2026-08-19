@@ -45,7 +45,7 @@ const SignUp = () => {
   return (
     <div className="flex flex-wrap items-center justify-center">
       <form
-        className="flex flex-col p-5 w-auto h-auto border border-gray-200 rounded-md shadow-md gap-2"
+        className="flex flex-col p-5 w-auto h-auto border border-gray-200 rounded-md shadow-md gap-2 bg-blue-200"
         onSubmit={handleSubmit}
       >
         <h2 className="font-bold text-2xl"> Sign Up</h2>
@@ -53,7 +53,7 @@ const SignUp = () => {
         <span className="flex flex-col p-2 gap-1">
           <p className="w-auto h-auto ">Full Name</p>
           <input
-            className="p-2 border border-gray-100 rounded-sm"
+            className="p-2 border border-blue-900 rounded-sm"
             name="name"
             placeholder="Enter Your Full Name"
             value={form.name}
@@ -64,7 +64,7 @@ const SignUp = () => {
         <span className="flex flex-col p-2 gap-1">
           <p> Email Address</p>
           <input
-            className="p-2 border border-gray-100 rounded-sm"
+            className="p-2 border border-blue-900 rounded-sm"
             name="email"
             type="email"
             placeholder="Enter your Email Address"
@@ -76,7 +76,7 @@ const SignUp = () => {
         <span className="flex flex-col p-2 gap-1">
           <p>Phone Number</p>
           <input
-            className="p-2 border border-gray-100 rounded-sm"
+            className="p-2 border border-blue-900 rounded-sm"
             name="phone_number"
             placeholder="Enter Valid Phone No"
             value={form.phone_number}
@@ -87,7 +87,7 @@ const SignUp = () => {
         <span className="flex flex-col p-2 gap-1">
           <p> Password</p>
           <input
-            className="p-2 border border-gray-100 rounded-sm"
+            className="p-2 border border-blue-900 rounded-sm"
             name="password"
             type="password"
             placeholder="Enter a strong Password"
@@ -98,7 +98,7 @@ const SignUp = () => {
         </span>
 
         <button
-          className="w-full  p-2 bg-blue-900 border border-black rounded-sm text-white text-xl font-bold"
+          className="w-full  p-2 bg-blue-600 border border-black rounded-sm text-white text-xl font-bold"
           type="submit"
         >
           Create Account

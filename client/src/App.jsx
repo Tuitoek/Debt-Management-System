@@ -33,7 +33,7 @@ function App() {
   };
 
   return (
-    <div className="p-5 gap-5 bg-white-100">
+    <div className="p-5 gap-5 bg-gray-100">
       <SignUp />
       <Login />
 <span className="flex flex-row flex-wrap gap-4 ">

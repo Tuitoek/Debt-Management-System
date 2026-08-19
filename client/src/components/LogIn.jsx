@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { Link } from 'react-router-dom';
 
 const LogIn = ({ onClose }) => {
   // Form , Error and Login State
@@ -78,6 +79,16 @@ const LogIn = ({ onClose }) => {
         >
           Log In
         </button>
+        <span>
+        
+            <p className="text-gray-200 text-left text-sm mt-2">
+              Don't Have an Account? { ' '} 
+              <Link to="/signup" className="text-blue-700 font-semibold underline">
+              Sign Up
+              </Link>
+            </p>
+         
+        </span>
       </form>
     </div>
   );

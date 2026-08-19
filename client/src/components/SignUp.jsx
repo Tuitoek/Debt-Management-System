@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   // Set Form State
@@ -7,7 +8,7 @@ const SignUp = () => {
     name: "",
     email: "",
     password: "",
-    phone_number: ""
+    phone_number: "",
   });
   // Set Error State
   const [error, setError] = useState("");
@@ -103,6 +104,13 @@ const SignUp = () => {
         >
           Create Account
         </button>
+
+        <p className="text-center mt-2">
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-700 font-semibold underline">
+            Log In
+          </Link>
+        </p>
       </form>
     </div>
   );

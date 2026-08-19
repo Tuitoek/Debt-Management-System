@@ -7,7 +7,7 @@ const SignUp = () => {
     name: "",
     email: "",
     password: "",
-    phone: "",
+    phone_number: ""
   });
   // Set Error State
   const [error, setError] = useState("");
@@ -77,10 +77,11 @@ const SignUp = () => {
           <p>Phone Number</p>
           <input
             className="p-2 border border-gray-100 rounded-sm"
-            name="phone"
+            name="phone_number"
             placeholder="Enter Valid Phone No"
-            value={form.phone}
+            value={form.phone_number}
             onChange={handleChange}
+            required
           />
         </span>
         <span className="flex flex-col p-2 gap-1">

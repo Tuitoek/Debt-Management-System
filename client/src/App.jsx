@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
 import LandingHero from "./components/LandingHero";
 import SalaryCalculator from "./components/SalaryCalculator";
 import Navbar from "./components/Navbar";
@@ -8,7 +10,7 @@ import DebtForm from "./components/DebtForm";
 import Login from "./components/LogIn";
 import LogInButton from "./components/LogInButton";
 import SignUpButton from "./components/SignUpButton";
-import { useAuth } from './context/AuthContext';
+import { useAuth } from "./context/AuthContext";
 import "./App.css";
 import SignUp from "./components/SignUp";
 
@@ -17,8 +19,8 @@ function App() {
   const [payeResult, setPayeResult] = useState(null);
   const { user, logout } = useAuth();
 
-  if(user){
- return (
+  if (user) {
+    return (
       <div>
         <h1>Welcome, {user.name}!</h1>
         <button onClick={logout}>Log Out</button>
@@ -33,32 +35,11 @@ function App() {
   };
 
   return (
-    <div className="p-5 gap-5 bg-gray-100">
-      <SignUp />
-      <Login />
-<span className="flex flex-row flex-wrap gap-4 ">
-        <LandingHero />
-        <span className="flex flex-row gap-3 m-10">
-          <LogInButton />
-          <SignUpButton />
-        </span>
-      </span>
-<Login />
-      <span className="flex flex-row items-center justify-center gap-5">
-        {/* Pass handler to receive result */}
-        <SalaryCalculator onCalculate={handleCalculateNetSalary} />
-
-        {/* Display NetSalary once payeResult is populated */}
-        {payeResult && <NetSalary result={payeResult} />}
-      </span>
-      <Navbar />
-      <span className="flex flex-row justify-center space-x-5 p-5">
-        <DebtForm />
-        <Debtlist />
-      </span>
-      
-      
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
+    </Routes>
   );
 }
 

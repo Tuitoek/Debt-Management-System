@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const pool = require('../db');   // adjust path if this file is inside a routes/ folder
+const pool = require('../db');
 
 
 // SIGNUP
@@ -18,7 +18,7 @@ router.post('/signup', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await pool.query(
-      'INSERT INTO users (name, email, password, phone_number) VALUES ($1, $2, $3, $4) RETURNING id, name, email',
+      'INSERT INTO users (name, email, password, phone_number) VALUES ($1, $2, $3, $4) RETURNING id, name, email,phone_number',
       [name, email, hashedPassword, phone_number]
     );
 

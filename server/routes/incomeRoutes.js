@@ -33,4 +33,26 @@ router.post('/income', authMiddleware, async(req,res) =>{
     }
 })
 
+
+// Delete income entry for logged-in user
+router.delete('/income/:id', authMiddleware, async(req,res) =>{
+    try {
+       
+        const { id } = req.params;
+        const result = await pool.query(
+            'DELETE FROM income WHERE id = $1 and user_id = $2 RETURNING *', [id, req.userId]
+        );
+
+        if(result.rows.length === 0){
+            return res.status(404).json({ message: 'Income entry not found!'})
+        }
+
+        res.json({message: 'Income entry deleted'})
+    } catch (error) {
+        console.error('Delete income error:' , error);
+        res.status(500).json({ message: 'Server error' });
+    }
+})
+
+
 module.exports = router;

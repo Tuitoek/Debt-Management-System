@@ -30,24 +30,21 @@ function Navbar() {
 
   return (
     <div className="m-10 p-5 w-auto h-auto bg-gradient-to-r from-blue-600 to-green-500 rounded-lg shadow-md font-semibold text-lg">
-      {/* Top row: Home link + burger button */}
       <div className="flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2" onClick={closeMenu}>
           <FontAwesomeIcon icon={faHouse} className="mr-2" />
           <h2>Home</h2>
         </Link>
 
-        {/* Burger button — only shows on small screens */}
         <button
-          className="md:hidden text-2xl"
+          className="min-[1080px]:hidden text-2xl"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
           <FontAwesomeIcon icon={isOpen ? faXmark : faBars} />
         </button>
 
-        {/* Desktop menu — hidden on small screens, shown from md breakpoint up */}
-        <div className="hidden md:flex flex-wrap justify-around items-center gap-6">
+        <div className="hidden min-[1080px]:flex flex-wrap justify-around items-center gap-6">
           {user ? (
             <>
               <Link to="/dashboard" className="flex items-center gap-2">
@@ -85,9 +82,8 @@ function Navbar() {
         </div>
       </div>
 
-      {/* Mobile dropdown — only rendered when isOpen, only visible on small screens */}
       {isOpen && (
-        <div className="md:hidden flex flex-col gap-4 mt-4 pt-4 border-t border-white/40">
+        <div className="min-[1080px]:hidden flex flex-col gap-4 mt-4 pt-4 border-t border-white/40">
           {user ? (
             <>
               <Link to="/dashboard" className="flex items-center gap-2" onClick={closeMenu}>

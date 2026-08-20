@@ -10,7 +10,7 @@ router.get("/income", authMiddleware, async (req,res) => {
       "SELECT * FROM income WHERE user_id = $1 ORDER BY date_received DESC",
       [req.userId],
     );
-    result.json(result.rows);
+    res.json(result.rows);
   } catch (err) {
     console.error(`❌ Get income error:`, err);
     res.status(500).json({ message: "Server error" });

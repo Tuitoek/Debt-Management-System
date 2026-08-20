@@ -23,7 +23,7 @@ function Navbar() {
   };
 
   return (
-    <div className=" flex flex-wrap m-10 p-5 w-auto h-15  bg-gradient-to-r from-blue-600 to-green-500  rounded-lg shadow-md p-4 flex justify-around items-center font-semibold text-lg">
+    <div className=" flex flex-wrap m-10 p-5 w-auto h-auto  bg-gradient-to-r from-blue-600 to-green-500  rounded-lg shadow-md p-4 flex justify-around items-center font-semibold text-lg">
       <Link to="/" className="flex items-center gap-2">
         <FontAwesomeIcon icon={faHouse} className="mr-2" />
         <h2>Home</h2>

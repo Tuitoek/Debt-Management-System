@@ -19,7 +19,12 @@ const Income = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
+     if (Array.isArray(data)) {
       setIncomeList(data);
+    } else {
+      console.error('Unexpected income response:', data);
+      setIncomeList([]);   // fallback so .map() never crashes
+    }
     } catch (error) {
       console.error("Fetch income error:", error);
     }

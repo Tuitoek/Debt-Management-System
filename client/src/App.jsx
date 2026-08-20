@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import ProtectedRoute from './components/ProtectedRoute';
 import Home from "./components/Home";
 import LandingHero from "./components/LandingHero";
 import SalaryCalculator from "./components/SalaryCalculator";
@@ -13,20 +14,11 @@ import SignUpButton from "./components/SignUpButton";
 import { useAuth } from "./context/AuthContext";
 import "./App.css";
 import SignUp from "./components/SignUp";
+import Profile from "./pages/Profile";
 
 function App() {
   // Calculate net salary via backend API
   const [payeResult, setPayeResult] = useState(null);
-  const { user, logout } = useAuth();
-
-  if (user) {
-    return (
-      <div>
-        <h1>Welcome, {user.name}!</h1>
-        <button onClick={logout}>Log Out</button>
-      </div>
-    );
-  }
 
   // Receive calculated data directly from SalaryCalculator
   const handleCalculateNetSalary = (data) => {
@@ -39,6 +31,11 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path='/profile' element={
+        <ProtectedRoute>
+          <Profile />
+        </ProtectedRoute>
+      }/>
     </Routes>
   );
 }

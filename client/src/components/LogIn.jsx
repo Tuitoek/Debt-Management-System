@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 
 const LogIn = ({ onClose }) => {
   // Form , Error and Login State
@@ -34,11 +34,15 @@ const LogIn = ({ onClose }) => {
 
       // save user + token into context (and localStorage, via AuthContext)
       login(data.user, data.token);
+      // Navigates to login after handleSubmit
+      login(data.user, data.token);
+      navigate("/profile");
     } catch (err) {
       console.error(err);
       setError("Something went wrong. Try again.");
     }
   };
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-wrap items-center justify-center ">
@@ -80,14 +84,15 @@ const LogIn = ({ onClose }) => {
           Log In
         </button>
         <span>
-        
-            <p className="text-gray-200 text-left text-sm mt-2">
-              Don't Have an Account? { ' '} 
-              <Link to="/signup" className="text-blue-700 font-semibold underline">
+          <p className="text-gray-200 text-left text-sm mt-2">
+            Don't Have an Account?{" "}
+            <Link
+              to="/signup"
+              className="text-blue-700 font-semibold underline"
+            >
               Sign Up
-              </Link>
-            </p>
-         
+            </Link>
+          </p>
         </span>
       </form>
     </div>

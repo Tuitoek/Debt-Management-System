@@ -50,6 +50,8 @@ router.post('/login', async (req, res) => {
         process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
+    
+    console.log('SIGNING with secret:', process.env.JWT_SECRET);
 
     res.json({
       message: 'Login successful',

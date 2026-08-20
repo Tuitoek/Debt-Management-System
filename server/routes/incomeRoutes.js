@@ -4,14 +4,14 @@ const pool = require("../db");
 const authMiddleware = require("../middleware/authMiddleware");
 
 // Get all income entries for the logged-in user
-router.get("/income", authMiddleware, async () => {
+router.get("/income", authMiddleware, async (req,res) => {
   try {
     const result = await pool.query(
       "SELECT * FROM income WHERE user_id = $1 ORDER BY date_received DESC",
-      [requestAnimationFrame.userId],
+      [req.userId],
     );
     result.json(result.rows);
-  } catch (error) {
+  } catch (err) {
     console.error(`❌ Get income error:`, err);
     res.status(500).json({ message: "Server error" });
   }
@@ -28,8 +28,8 @@ router.post("/income", authMiddleware, async (req, res) => {
     );
 
     res.status(201).json(newIncome.rows[0]);
-  } catch (error) {
-    console.error("Add income error:", error);
+  } catch (err) {
+    console.error("Add income error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -53,8 +53,11 @@ router.put("/income/:id", authMiddleware, async (req, res) => {
     }
 
     res.json(result.rows[0]);
-  } catch (error) {}
-});
+  } catch (err) {
+     console.error('Update income error:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+  });
 
 // Delete income entry for logged-in user
 router.delete("/income/:id", authMiddleware, async (req, res) => {
@@ -70,8 +73,8 @@ router.delete("/income/:id", authMiddleware, async (req, res) => {
     }
 
     res.json({ message: "Income entry deleted" });
-  } catch (error) {
-    console.error("Delete income error:", error);
+  } catch (err) {
+    console.error("Delete income error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });

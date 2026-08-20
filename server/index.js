@@ -10,6 +10,7 @@ const authRoutes = require("./routes/auth.js");
 // Importing routes
 const debtsRoutes = require("./routes/debtsRoutes.js");
 const salaryRoutes = require("./routes/salaryRoutes.js");
+const incomeRoutes = require('./routes/incomeRoutes.js');
 
 //Middleware
 app.use(cors()); //allows requests from React frontend
@@ -24,6 +25,9 @@ app.use("/api", salaryRoutes);
 
 // Auth routes
 app.use("/api", authRoutes);
+
+// Income Routes
+app.use('/api', incomeRoutes);
 
 // Setting Up Database
 pool.query("SELECT NOW()", (err, res) => {

@@ -14,10 +14,6 @@ function Home() {
         Take control of your finances with smart debt tracking, expense
         management & savings planning
       </h3>
-      <div className="mt-6 flex gap-4 justify-center">
-        <Link to="/login" className="px-4 py-2 bg-blue-900 text-white rounded">Log In</Link>
-        <Link to="/signup" className="px-4 py-2 bg-green-700 text-white rounded">Sign Up</Link>
-      </div>
     </div>
   );
 }

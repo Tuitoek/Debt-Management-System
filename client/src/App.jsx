@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./components/Home";
 import LandingHero from "./components/LandingHero";
 import SalaryCalculator from "./components/SalaryCalculator";
@@ -15,7 +15,7 @@ import { useAuth } from "./context/AuthContext";
 import "./App.css";
 import SignUp from "./components/SignUp";
 import Profile from "./pages/Profile";
-import income from "./pages/Income";
+import Income from "./pages/Income";
 
 function App() {
   // Calculate net salary via backend API
@@ -28,22 +28,31 @@ function App() {
   };
 
   return (
+    <>
+   <Navbar/>
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path='/profile' element={
-        <ProtectedRoute>
-          <Profile />
-        </ProtectedRoute>
-      }/>
-      <Route path='/income' element={
-        <ProtectedRoute>
-          <Income />
-        </ProtectedRoute>
-      }
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/income"
+        element={
+          <ProtectedRoute>
+            <Income />
+          </ProtectedRoute>
+        }
       />
     </Routes>
+     
+    </>
   );
 }
 

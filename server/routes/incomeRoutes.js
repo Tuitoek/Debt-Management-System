@@ -16,6 +16,21 @@ router.get('/income', authMiddleware, async()=>{
     }
 })
 
+// Post income entry for logged-in user
+router.post('/income', authMiddleware, async(req,res) =>{
+    try {
+        const { source, amount, date_received } = req.body;
 
+        const newIncome = await pool.query(
+            'INSERT INTO income(user_id, source, amount, date_received) VALUES ($1, $2,$3,$4) RETURNING *', 
+            [ req.userId, source, amount, date_received || new Date() ]
+        );
+
+        res.status(201).json(newIncome.rows[0]);
+    } catch (error) {
+        console.error('Add income error:' , error);
+        res.status(500).json({ message: 'Server error' });
+    }
+})
 
 module.exports = router;

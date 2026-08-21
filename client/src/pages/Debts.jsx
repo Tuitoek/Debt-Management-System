@@ -46,25 +46,25 @@ function Debtlist() {
   };
 
   return (
-    <div className="m-10 p-5 gap-5 flex flex-col w-auto h-auto border border-gray-300 rounded-sm shadow-md bg-blue-800">
+    <div className="m-10 p-5 gap-5 flex flex-col w-auto h-auto border border-gray-300 rounded-sm shadow-md bg-inherit">
       <span className="flex flex-row flex-wrap gap-3">
-        <FontAwesomeIcon icon={faCalculator} className="mr-2 text-white text-4xl" />
-        <h2 className="text-2xl font-bold mb-4 text-white">My Debts</h2>
+        <FontAwesomeIcon icon={faCalculator} className="mr-2 text-black text-4xl" />
+        <h2 className="text-2xl font-bold mb-4 text-black">My Debts</h2>
       </span>
 
       <ul className="flex space-between flex-wrap gap-5">
         {debts.map((debt) => (
           <li
-            className="mb-2 w-auto h-auto bg-white p-2 border border-gray-300 rounded-md flex flex-col shadow-md gap-3"
+            className="mb-2 w-auto h-auto bg-white p-2 border border-gray-300 rounded-lg flex flex-col shadow-md gap-3"
             key={debt.id}
           >
-            <span className="font-bold text-lg p-2 w-auto h-auto bg-blue-200 text-black rounded-md">
+            <span className="font-bold text-lg p-2 w-auto h-auto bg-blue-500 text-white rounded-md flex justify-center">
               Loan Name: {debt.name}
               <span className="text-left ml-12">
-                <FontAwesomeIcon icon={faPenToSquare} className="ml-2 text-green-600 cursor-pointer" />
+                <FontAwesomeIcon icon={faPenToSquare} className="ml-2 text-black border p-2 rounded-lg bg-green-500 cursor-pointer" />
                 <FontAwesomeIcon
                   icon={faTrash}
-                  className="ml-2 text-red-600 cursor-pointer"
+                  className="ml-2 text-black border bg-red-500 p-2 rounded-lg cursor-pointer"
                   onClick={() => handleDelete(debt.id)}
                 />
               </span>

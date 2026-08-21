@@ -6,7 +6,7 @@ import LandingHero from "./components/LandingHero";
 import SalaryCalculator from "./components/SalaryCalculator";
 import Navbar from "./components/Navbar";
 import NetSalary from "./components/NetSalary";
-import Debtlist from "./pages/Debtlist";
+import Debts from './pages/Debts';
 import DebtForm from "./components/DebtForm";
 import Login from "./components/LogIn";
 import LogInButton from "./components/LogInButton";
@@ -51,10 +51,10 @@ function App() {
         }
       />
            <Route
-        path="/income"
+        path="/debts"
         element={
           <ProtectedRoute>
-            <Debtlist />
+            <Debts />
           </ProtectedRoute>
         }
       />

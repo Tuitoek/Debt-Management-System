@@ -46,7 +46,7 @@ function Debtlist() {
   };
 
   return (
-    <div className="p-5 gap-5 flex flex-col w-auto h-auto border border-gray-300 rounded-sm shadow-md bg-blue-800">
+    <div className="m-10 p-5 gap-5 flex flex-col w-auto h-auto border border-gray-300 rounded-sm shadow-md bg-blue-800">
       <span className="flex flex-row flex-wrap gap-3">
         <FontAwesomeIcon icon={faCalculator} className="mr-2 text-white text-4xl" />
         <h2 className="text-2xl font-bold mb-4 text-white">My Debts</h2>
@@ -55,7 +55,7 @@ function Debtlist() {
       <ul className="flex space-between flex-wrap gap-5">
         {debts.map((debt) => (
           <li
-            className="mb-2 w-80 h-auto bg-white p-2 border border-gray-300 rounded-md flex flex-col shadow-md gap-3"
+            className="mb-2 w-auto h-auto bg-white p-2 border border-gray-300 rounded-md flex flex-col shadow-md gap-3"
             key={debt.id}
           >
             <span className="font-bold text-lg p-2 w-auto h-auto bg-blue-200 text-black rounded-md">

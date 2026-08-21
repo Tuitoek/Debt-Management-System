@@ -29,7 +29,7 @@ function Navbar() {
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <div className="m-10 p-5 w-auto h-auto bg-gradient-to-r from-blue-600 to-green-500 rounded-lg shadow-md font-semibold text-lg">
+    <div className="m-10 p-5 w-auto h-auto bg-gradient-to-r from-blue-600 to-green-500 rounded-lg shadow-md  text-lg">
       <div className="flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2" onClick={closeMenu}>
           <FontAwesomeIcon icon={faHouse} className="mr-2" />

@@ -12,7 +12,7 @@ router.get("/", authMiddleware, async (req, res) => {
     );
     res.json(result.rows);
   } catch (error) {
-    console.error("Get debts error:", err);
+    console.error("Get debts error:", error );
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -20,12 +20,12 @@ router.get("/", authMiddleware, async (req, res) => {
 // Post a new debt for the logged-in user
 router.post("/", authMiddleware, async (req, res) => {
   try {
-    // Debt request from body
     const { name, total_amount, installment_amount, interest_rate, due_date } =
       req.body;
 
     const newDebt = await pool.query(
-      `INSERT INTO debts(user_id, name, total_amount, installment_amount, interest_rate,due_date) VALUES ($1, $2,$3,$4, $5, $6) RETURNING *`,
+      `INSERT INTO debts (user_id, name, total_amount, installment_amount, interest_rate, due_date)
+       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
       [
         req.userId,
         name,
@@ -33,20 +33,18 @@ router.post("/", authMiddleware, async (req, res) => {
         installment_amount,
         interest_rate || 0,
         due_date,
-        id,
-        req.userId,
       ],
     );
 
     res.status(201).json(newDebt.rows[0]);
-  } catch (error) {
-    console.error(" Add debt error:", err);
+  } catch (err) {
+    console.error("❌ Add debt error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
 
 // Update a debt
-router.put("./:id", authMiddleware, async (req, res) => {
+router.put("/:id", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
     const { name, total_amount, installment_amount, interest_rate, due_date } =
@@ -71,7 +69,7 @@ router.put("./:id", authMiddleware, async (req, res) => {
 
     res.json(result.rows[0]);
   } catch (error) {
-    console.error("Update debt error:", err);
+    console.error("Update debt error:", error);
     res.status(500).json({ message: "Debt not found" });
   }
 });
@@ -83,7 +81,7 @@ router.delete("/:id", authMiddleware, async (req, res) => {
 
     const result = await pool.query(
       "DELETE FROM debts WHERE id = $1 AND user_id = $2 RETURNING *",
-      [id, req.userId]
+      [id, req.userId],
     );
 
     if (result.rows.length === 0) {
@@ -91,8 +89,8 @@ router.delete("/:id", authMiddleware, async (req, res) => {
     }
 
     res.json({ message: "Debt deleted" });
-  } catch (err) {
-    console.error("❌ Delete debt error:", err);
+  } catch (error) {
+    console.error("❌ Delete debt error:", error);
     res.status(500).json({ message: "Server error" });
   }
 });

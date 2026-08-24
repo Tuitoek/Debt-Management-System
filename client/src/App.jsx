@@ -16,6 +16,7 @@ import "./App.css";
 import SignUp from "./components/SignUp";
 import Profile from "./pages/Profile";
 import Income from "./pages/Income";
+import Budget from './pages/Budget';
 
 function App() {
   // Calculate net salary via backend API
@@ -55,6 +56,14 @@ function App() {
         element={
           <ProtectedRoute>
             <Debts />
+          </ProtectedRoute>
+        }
+      />
+        <Route
+        path="/budget"
+        element={
+          <ProtectedRoute>
+            <Budget />
           </ProtectedRoute>
         }
       />

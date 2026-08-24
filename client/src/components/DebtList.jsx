@@ -62,6 +62,15 @@ function Debtlist({ refreshSignal }) {
     });
   };
 
+  const cancelEdit = () =>{
+    setEditingId(null),
+    setEditForm({});
+  }
+
+  const handleEditChange = (e) =>{
+    setEditForm({ ...editForm, [e.target.name]: e.target.value })
+  };
+
   
 
 

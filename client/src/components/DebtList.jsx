@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-
 import {
   faCalculator,
   faCalendarCheck,
@@ -17,9 +16,12 @@ import {
 function Debtlist({ refreshSignal }) {
   const { token } = useAuth();
   const [debts, setDebts] = useState([]);
+  const [editingId, setEditingId] = useState(null);
+  const [editForm, setEditForm] = useState({});
 
-  const fetchDebts =  () => {
-   fetch("http://localhost:5000/api/debts", {
+  //   Function that fetched debts from database
+  const fetchDebts = () => {
+    fetch("http://localhost:5000/api/debts", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
@@ -38,6 +40,7 @@ function Debtlist({ refreshSignal }) {
     fetchDebts();
   }, [refreshSignal]);
 
+  //   Function that deletes debts from Database
   const handleDelete = (id) => {
     fetch(`http://localhost:5000/api/debts/${id}`, {
       method: "DELETE",
@@ -47,10 +50,23 @@ function Debtlist({ refreshSignal }) {
       .catch((error) => console.error("Error deleting debt:", error));
   };
 
+  //   Start editing: switch card into edit mode, prefilled with current values
+  const startEdit = (debt) => {
+    setEditingId(null);
+    setEditForm({
+        name: debt.name,
+        total_amount: debt.total_amount,
+        installment_amount: debt.installment_amount,
+        interest_rate: debt.interest_rate,
+        due_date: debt.due_date ? debt.due_date.split("T")[0] : "",
+    });
+  };
+
+  
+
+
   return (
     <div className="p-4  flex flex-col gap-5 w-auto h-auto border border-gray-300 rounded-sm shadow-md bg-inherit">
-
-
       <span className="flex flex-row flex-wrap gap-3">
         <FontAwesomeIcon
           icon={faCalculator}
@@ -70,6 +86,7 @@ function Debtlist({ refreshSignal }) {
               <span className="text-left ml-12">
                 <FontAwesomeIcon
                   icon={faPenToSquare}
+                  onClick={updateDebt}
                   className="ml-2 text-black border p-2 rounded-lg bg-green-500 cursor-pointer"
                 />
                 <FontAwesomeIcon

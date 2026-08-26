@@ -18,7 +18,7 @@ router.get("/", authMiddleware, async(req,res) =>{
 })
 
 // Update budget for logged in user
-router.put("/", authMiddleware, async(req,res) => {
+router.put("/:id", authMiddleware, async(req,res) => {
     try {
         const { id } = req.params;
         const { category, monthly_limit } = req.body;
@@ -37,6 +37,25 @@ router.put("/", authMiddleware, async(req,res) => {
         console.error("Update Budget Error");
         res.status(500).json({ message: "Server Error"});
     }
+})
+
+// DELETE a budget category(only if it belongs to the logged-in user)
+router.delete("/:id", authMiddleware, async (req, res) => {
+        try {
+            const {iid } = req.params;
+            const result = await pool.query(
+                "DELETE FROM budgets WHERE id = $1 AND user-id = $2 RETURING *", [id, req.userId]
+            );
+
+            if(result.rows.length === 0){
+                return res.status(404).json({ message: "Budget not found" });
+            }
+            res.json({ message: "Budget deleted" })
+
+        } catch ( error) {
+            console.error("Delete budget error:", error);
+            res.status(500).json({ message: "Server error" })
+        }
 })
 
 module.exports = router;

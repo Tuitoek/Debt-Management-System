@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 
 const RULES = {
-  "Minimalist": [
+  Minimalist: [
     { label: "Needs", percent: 50 },
     { label: "Wants", percent: 30 },
     { label: "Savings", percent: 20 },
   ],
-  "Spender": [
+  Spender: [
     { label: "Needs", percent: 50 },
     { label: "Wants", percent: 40 },
     { label: "Savings", percent: 10 },
@@ -17,7 +17,7 @@ const RULES = {
     { label: "Wants", percent: 20 },
     { label: "Savings", percent: 20 },
   ],
-  "Saver": [
+  Saver: [
     { label: "Needs", percent: 40 },
     { label: "Wants", percent: 20 },
     { label: "Savings", percent: 30 },
@@ -32,6 +32,10 @@ const Budget = () => {
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({});
   const [error, setError] = useState("");
+  const [customCategory, setCustomCategory] = useState({
+    category: "",
+    monthly_limit: "",
+  });
 
   // Fetch total income (sum of all income entries)
   const fetchIncomeTotal = async () => {
@@ -71,6 +75,36 @@ const Budget = () => {
     fetchIncomeTotal();
     fetchBudgets();
   }, []);
+
+  // Handle Custom Change
+  const handleCustomChange = (e) => {
+    setCustomCategory({ ...customCategory, [e.target.name]: e.target.value });
+  };
+
+  // Add Custom Category
+  const addCustomeCategory = async (e) => {
+    e.preventDefault();
+    setError("");
+    try {
+      const res = await fetch("http://localhost:5000/api/budget", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(customCategory)
+      })
+
+      const data = await res.json();
+
+      if(!res.ok){
+        setError(data.message || "Failed to add category");
+      }
+
+      setCustomCategory({ category: "", monthly_limit: "" });
+      fetchBudgets();
+    } catch (error) {}
+  };
 
   // Apply the selected rule: create one budget row per category
   const applyRule = async () => {

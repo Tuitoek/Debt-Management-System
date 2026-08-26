@@ -14,6 +14,8 @@ function Home() {
         Take control of your finances with smart debt tracking, expense
         management & savings planning
       </h3>
+      <p className='font-semibold text-gray-700'>Ever wondered why you are in a constant debt cycle? <br /> Come keep track of your finances with us and walk on the road to financial freedom</p>
+      
     </div>
   );
 }

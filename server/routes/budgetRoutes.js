@@ -16,3 +16,27 @@ router.get("/", authMiddleware, async(req,res) =>{
         res.status(500).json({ message: "Server error" });
     }
 })
+
+// Update budget for logged in user
+router.put("/", authMiddleware, async(req,res) => {
+    try {
+        const { id } = req.params;
+        const { category, monthly_limit } = req.body;
+
+        const result = await populate.query(
+            `UPDATE budgets  SET category = $1, monthly_limit = $2 WHERE id = $3 and user_if = $4 RETURNING *, [category, monthly_limit, id, req.userId]`
+        );
+
+        if( result.rows.length === 0){
+            return res.status(404). json({ message: "Budget not found"});
+        }
+
+        res.json(result.rows[0]);
+
+    } catch (error) {
+        console.error("Update Budget Error");
+        res.status(500).json({ message: "Server Error"});
+    }
+})
+
+module.exports = router;

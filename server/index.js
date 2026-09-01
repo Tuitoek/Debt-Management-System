@@ -31,7 +31,7 @@ app.use("/api", authRoutes);
 app.use('/api', incomeRoutes);
 
 // Debt Routes
-app.use("/api", budgetRoutes);
+app.use("/api/budget", budgetRoutes);
 
 // Setting Up Database
 pool.query("SELECT NOW()", (err, res) => {

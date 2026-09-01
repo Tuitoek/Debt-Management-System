@@ -227,11 +227,14 @@ const Budget = () => {
               className="p-2 border border-gray-300 rounded"
               required
             />
+            <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+              Add Category
+            </button>
           </form>
         </div>
 
         {/* Live preview of the split */}
-        <div className="flex flex-col gap-1 mb-4">
+        <div className="flex flex-col gap-1 mb-4 p-5 text-gray-700 font-semibold">
           {RULES[selectedRule].map((item) => (
             <p key={item.label}>
               {item.label} ({item.percent}%): KES{" "}

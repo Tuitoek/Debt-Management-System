@@ -120,3 +120,26 @@ router.put("/:id", authMiddleware, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+// Delete a subcategory
+router.delete("/:id", authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const result = await pool.query(
+      "DELETE FROM subcategories WHERE id = $1 AND user_id = $2 RETURNING *",
+      [id, req.userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Subcategory not found" });
+    }
+
+    res.json({ message: "Subcategory deleted successfully" });
+  } catch (error) {
+    console.error("Delete subcategory error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+module.exports = router;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
+import BudgetCategoryCard from "../components/BudgetCategoryCard";
 
 const RULES = {
   Minimalist: [
@@ -37,7 +38,6 @@ const Budget = () => {
     monthly_limit: "",
   });
 
-  // Fetch total income (sum of all income entries)
   const fetchIncomeTotal = async () => {
     try {
       const res = await fetch("http://localhost:5000/api/income", {
@@ -45,10 +45,7 @@ const Budget = () => {
       });
       const data = await res.json();
       if (Array.isArray(data)) {
-        const total = data.reduce(
-          (sum, entry) => sum + Number(entry.amount),
-          0,
-        );
+        const total = data.reduce((sum, entry) => sum + Number(entry.amount), 0);
         setTotalIncome(total);
       }
     } catch (err) {
@@ -56,7 +53,6 @@ const Budget = () => {
     }
   };
 
-  // Fetch existing budget categories
   const fetchBudgets = async () => {
     try {
       const res = await fetch("http://localhost:5000/api/budget", {
@@ -76,12 +72,10 @@ const Budget = () => {
     fetchBudgets();
   }, []);
 
-  // Handle Custom Change
   const handleCustomChange = (e) => {
     setCustomCategory({ ...customCategory, [e.target.name]: e.target.value });
   };
 
-  // Add Custom Category
   const addCustomeCategory = async (e) => {
     e.preventDefault();
     setError("");
@@ -99,14 +93,17 @@ const Budget = () => {
 
       if (!res.ok) {
         setError(data.message || "Failed to add category");
+        return;
       }
 
       setCustomCategory({ category: "", monthly_limit: "" });
       fetchBudgets();
-    } catch (error) {}
+    } catch (error) {
+      console.error("Add custom category error:", error);
+      setError("Something went wrong adding the category.");
+    }
   };
 
-  // Apply the selected rule: create one budget row per category
   const applyRule = async () => {
     setError("");
     const split = RULES[selectedRule];
@@ -182,8 +179,7 @@ const Budget = () => {
       <h2 className="text-2xl font-bold">Budget Planner</h2>
 
       <p className="text-lg">
-        Your total recorded income:{" "}
-        <strong>KES {totalIncome.toLocaleString()}</strong>
+        Your total recorded income: <strong>KES {totalIncome.toLocaleString()}</strong>
       </p>
 
       {/* Rule picker */}
@@ -207,7 +203,7 @@ const Budget = () => {
 
         {/* Add your own category, independent of any rule */}
         <div className="border border-gray-200 rounded-md p-4 shadow-md">
-          <h3 className="font-semibold mb-2"> Or add your own category</h3>
+          <h3 className="font-semibold mb-2">Or add your own category</h3>
           <form onSubmit={addCustomeCategory} className="flex flex-col gap-2">
             <input
               type="text"
@@ -255,8 +251,8 @@ const Budget = () => {
         </button>
       </div>
 
-      {/* Existing budget categories, editable */}
-      <div className="flex flex-col gap-3">
+      {/* Budget categories, each with its own subcategories nested inside */}
+      <div className="flex flex-col gap-4">
         <h3 className="text-xl font-semibold">Your Budget Categories</h3>
         {budgets.map((budget) =>
           editingId === budget.id ? (
@@ -293,30 +289,24 @@ const Budget = () => {
               </div>
             </div>
           ) : (
-            <div
-              key={budget.id}
-              className="flex justify-between items-center p-3 border border-gray-100 rounded-md"
-            >
-              <span>
-                <strong>{budget.category}</strong> — KES{" "}
-                {Number(budget.monthly_limit).toLocaleString()}
-              </span>
-              <span className="flex gap-3">
+            <div key={budget.id} className="flex flex-col gap-2">
+              <div className="flex justify-end gap-3 text-sm">
                 <button
                   onClick={() => startEdit(budget)}
                   className="text-green-700 font-semibold"
                 >
-                  Edit
+                  Edit Category
                 </button>
                 <button
                   onClick={() => handleDelete(budget.id)}
                   className="text-red-700 font-semibold"
                 >
-                  Delete
+                  Delete Category
                 </button>
-              </span>
+              </div>
+              <BudgetCategoryCard budget={budget} onBudgetsChanged={fetchBudgets} />
             </div>
-          ),
+          )
         )}
       </div>
     </div>

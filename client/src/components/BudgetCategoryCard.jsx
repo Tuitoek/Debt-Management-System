@@ -1,36 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 
-
-// Suggested subcategories per category type - shown as quick-add buttons
-const suggestedSubcategories = {
-  Needs: [
-    "Rent",
-    "Groceries",
-    "Utilities",
-    "Transport",
-    "Insurance",
-    "Healthcare",
-    "Debt Payments",
-  ],
-  Wants: [
-    "Entertainment",
-    "Dining Out",
-    "Shopping",
-    "Subscription Services",
-    "Travel",
-    "Hobbies",
-  ],
-  Savings: [
-    "Emergency Fund",
-    "Retirement",
-    "Investments",
-    "Education",
-    "Big Purchases",
-  ],
+// Suggested subcategories per category type — shown as quick-add buttons
+const SUGGESTIONS = {
+  Needs: ["Rent", "Groceries", "Utilities", "Transport", "Insurance"],
+  Wants: ["Entertainment", "Dining Out", "Shopping", "Subscriptions"],
+  Savings: ["Emergency Fund", "Investments", "Retirement", "Goals"],
 };
 
-const BudgetCategory = ({ budget, onBudgetChanged }) => {
+function BudgetCategoryCard({ budget, onBudgetsChanged }) {
   const { token } = useAuth();
   const [subcategories, setSubcategories] = useState([]);
   const [error, setError] = useState("");
@@ -41,12 +19,9 @@ const BudgetCategory = ({ budget, onBudgetChanged }) => {
 
   const fetchSubcategories = async () => {
     try {
-      const res = await fetch(
-        `http://localhost:5000/api/subcategories/${budget.id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
+      const res = await fetch(`http://localhost:5000/api/subcategories/${budget.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       const data = await res.json();
       if (Array.isArray(data)) setSubcategories(data);
     } catch (err) {
@@ -56,12 +31,9 @@ const BudgetCategory = ({ budget, onBudgetChanged }) => {
 
   useEffect(() => {
     fetchSubcategories();
-  }, [budget]);
+  }, [budget.id]);
 
-  const totalAllocated = subcategories.reduce(
-    (sum, s) => sum + Number(s.amount),
-    0,
-  );
+  const totalAllocated = subcategories.reduce((sum, s) => sum + Number(s.amount), 0);
   const remaining = Number(budget.monthly_limit) - totalAllocated;
 
   const addSubcategory = async (name, amount) => {
@@ -153,12 +125,12 @@ const BudgetCategory = ({ budget, onBudgetChanged }) => {
 
   // Which suggestions haven't been added yet, based on the category's base label
   const baseLabel = Object.keys(SUGGESTIONS).find((key) =>
-    budget.category.toLowerCase().includes(key.toLowerCase()),
+    budget.category.toLowerCase().includes(key.toLowerCase())
   );
   const suggestionList = baseLabel ? SUGGESTIONS[baseLabel] : [];
   const existingNames = subcategories.map((s) => s.name.toLowerCase());
   const availableSuggestions = suggestionList.filter(
-    (s) => !existingNames.includes(s.toLowerCase()),
+    (s) => !existingNames.includes(s.toLowerCase())
   );
 
   return (
@@ -166,10 +138,8 @@ const BudgetCategory = ({ budget, onBudgetChanged }) => {
       <div className="flex justify-between items-center mb-2">
         <h3 className="font-bold text-lg">{budget.category}</h3>
         <span className="text-sm">
-          KES {totalAllocated.toLocaleString()} /{" "}
-          {Number(budget.monthly_limit).toLocaleString()} (
-          {remaining >= 0 ? `${remaining.toLocaleString()} left` : "over limit"}
-          )
+          KES {totalAllocated.toLocaleString()} / {Number(budget.monthly_limit).toLocaleString()}
+          {" "}({remaining >= 0 ? `${remaining.toLocaleString()} left` : "over limit"})
         </span>
       </div>
 
@@ -208,43 +178,26 @@ const BudgetCategory = ({ budget, onBudgetChanged }) => {
                 onChange={handleEditChange}
                 className="p-1 border border-gray-300 rounded w-24"
               />
-              <button
-                onClick={() => saveEdit(sub.id)}
-                className="text-green-700 font-semibold"
-              >
+              <button onClick={() => saveEdit(sub.id)} className="text-green-700 font-semibold">
                 Save
               </button>
-              <button
-                onClick={cancelEdit}
-                className="text-gray-500 font-semibold"
-              >
+              <button onClick={cancelEdit} className="text-gray-500 font-semibold">
                 Cancel
               </button>
             </div>
           ) : (
-            <div
-              key={sub.id}
-              className="flex justify-between items-center p-2 bg-gray-50 rounded"
-            >
-              <span>
-                {sub.name} — KES {Number(sub.amount).toLocaleString()}
-              </span>
+            <div key={sub.id} className="flex justify-between items-center p-2 bg-gray-50 rounded">
+              <span>{sub.name} — KES {Number(sub.amount).toLocaleString()}</span>
               <span className="flex gap-3">
-                <button
-                  onClick={() => startEdit(sub)}
-                  className="text-green-700 text-sm font-semibold"
-                >
+                <button onClick={() => startEdit(sub)} className="text-green-700 text-sm font-semibold">
                   Edit
                 </button>
-                <button
-                  onClick={() => handleDelete(sub.id)}
-                  className="text-red-700 text-sm font-semibold"
-                >
+                <button onClick={() => handleDelete(sub.id)} className="text-red-700 text-sm font-semibold">
                   Delete
                 </button>
               </span>
             </div>
-          ),
+          )
         )}
       </div>
 
@@ -263,15 +216,12 @@ const BudgetCategory = ({ budget, onBudgetChanged }) => {
           onChange={(e) => setCustomAmount(e.target.value)}
           className="p-1 border border-gray-300 rounded w-24"
         />
-        <button
-          type="submit"
-          className="px-3 py-1 bg-blue-900 text-white rounded text-sm"
-        >
+        <button type="submit" className="px-3 py-1 bg-blue-900 text-white rounded text-sm">
           Add
         </button>
       </form>
     </div>
   );
-};
+}
 
-export default BudgetCategory;
+export default BudgetCategoryCard;

@@ -200,34 +200,7 @@ const Budget = () => {
             </button>
           ))}
         </div>
-
-        {/* Add your own category, independent of any rule */}
-        <div className="border border-gray-200 rounded-md p-4 shadow-md">
-          <h3 className="font-semibold mb-2">Or add your own category</h3>
-          <form onSubmit={addCustomeCategory} className="flex flex-col gap-2">
-            <input
-              type="text"
-              name="category"
-              placeholder="Category name (eg. Transport)"
-              value={customCategory.category}
-              onChange={handleCustomChange}
-              className="p-2 border border-gray-300 rounded"
-              required
-            />
-            <input
-              type="number"
-              name="monthly_limit"
-              placeholder="Monthly limit (KES)"
-              value={customCategory.monthly_limit}
-              onChange={handleCustomChange}
-              className="p-2 border border-gray-300 rounded"
-              required
-            />
-            <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-              Add Category
-            </button>
-          </form>
-        </div>
+     
 
         {/* Live preview of the split */}
         <div className="flex flex-col gap-1 mb-4 p-5 text-gray-700 font-semibold">

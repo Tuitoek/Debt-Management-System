@@ -50,12 +50,12 @@ router.post("/", authMiddleware, async (req, res) => {
     }
 
     // Insert the new subcategory if it doesn't exceed the limit
-    const newSUb = await pool.query(
+    const newSubcategory = await pool.query(
       "INSERT INTO budget_subcategories (budget_id, user_id,name, amount) VALUES ($1, $2, $3, $4) RETURNING *",
       [budgetId, req.userId, name, amount],
     );
 
-    res.status(201).json(newSUb.rows[0]);
+    res.status(201).json(newSubcategory.rows[0]);
   } catch (error) {
     console.error("Add subcategory error:", error);
     res.status(500).json({ message: "Server error" });

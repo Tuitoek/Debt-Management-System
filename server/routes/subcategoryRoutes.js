@@ -8,8 +8,8 @@ router.get("/:budgetId", authMiddleware, async (req, res) => {
   try {
     const { budgetId } = req.params;
     const subcategories = await pool.query(
-      "SELECT * FROM subcategories WHERE budget_id = $1 ORDER BY category ASC",
-      [budgetId],
+      "SELECT * FROM budget_subcategories WHERE budget_id = $1 AND user_id = $2 ORDER BY name ASC",
+      [budgetId, req.userId],
     );
     res.json(subcategories.rows);
   } catch (error) {
@@ -21,7 +21,7 @@ router.get("/:budgetId", authMiddleware, async (req, res) => {
 // POST a new subcategory
 router.post("/", authMiddleware, async (req, res) => {
   try {
-    const { budgetId, name, amount } = req.params;
+    const { budgetId, name, amount } = req.body;
 
     // Confirm the parent's budget's limit is not exceeded by the sum of all subcategories
     const budgetResult = await pool.query(
@@ -35,7 +35,7 @@ router.post("/", authMiddleware, async (req, res) => {
 
     // Sum existing subcategories under this budget
     const existingSubcategoriesResult = await pool.query(
-      "SELECT COALESCE(SUM(amount), 0) as total FROM subcategories WHERE budget_id = $1 AND user_id = $2",
+      "SELECT COALESCE(SUM(amount), 0) as total FROM budget_subcategories WHERE budget_id = $1 AND user_id = $2",
       [budgetId, req.userId],
     );
 
@@ -51,7 +51,7 @@ router.post("/", authMiddleware, async (req, res) => {
 
     // Insert the new subcategory if it doesn't exceed the limit
     const newSUb = await pool.query(
-      "INSERT INTO subcategories (budget_id, user_id,name, amount) VALUES ($1, $2, $3, $4) RETURNING *",
+      "INSERT INTO budget_subcategories (budget_id, user_id,name, amount) VALUES ($1, $2, $3, $4) RETURNING *",
       [budgetId, req.userId, name, amount],
     );
 
@@ -70,7 +70,7 @@ router.put("/:id", authMiddleware, async (req, res) => {
 
     // Get the budget_id for the subcategory being updated
     const subcategoryResult = await pool.query(
-      "SELECT budget_id FROM subcategories WHERE id = $1 AND user_id = $2",
+      "SELECT budget_id FROM budget_subcategories WHERE id = $1 AND user_id = $2",
       [id, req.userId],
     );
     if (subcategoryResult.rows.length === 0) {
@@ -93,24 +93,27 @@ router.put("/:id", authMiddleware, async (req, res) => {
 
     // Sum existing subcategories under this budget
     const existingSubcategoriesResult = await pool.query(
-      "SELECT COALESCE(SUM(amount), 0) as total FROM subcategories WHERE budget_id = $1 AND user_id = $2",
+      "SELECT COALESCE(SUM(amount), 0) as total FROM budget_subcategories WHERE budget_id = $1 AND user_id = $2",
       [budgetId, req.userId],
     );
 
-    const otherSubcategoriesTotal = Number(existingSubcategoriesResult.rows[0].total);
-    const newTotal = otherSubcategoriesTotal  + Number(amount);
-
+    const otherSubcategoriesTotal = Number(
+      existingSubcategoriesResult.rows[0].total,
+    );
+    const newTotal = otherSubcategoriesTotal + Number(amount);
 
     // Reject if it would exceed the budget's monthly limit
     if (newTotal > cap) {
       return res
         .status(400)
-        .json({ message: "Updating this subcategory exceeds the budget limit" });
+        .json({
+          message: "Updating this subcategory exceeds the budget limit",
+        });
     }
 
     // Update the subcategory if it doesn't exceed the limit
     const updatedSubcategory = await pool.query(
-      "UPDATE subcategories SET name = $1, amount = $2 WHERE id = $3 AND user_id = $4 RETURNING *",
+      "UPDATE budget_subcategories SET name = $1, amount = $2 WHERE id = $3 AND user_id = $4 RETURNING *",
       [name, amount, id, req.userId],
     );
 
@@ -127,8 +130,8 @@ router.delete("/:id", authMiddleware, async (req, res) => {
     const { id } = req.params;
 
     const result = await pool.query(
-      "DELETE FROM subcategories WHERE id = $1 AND user_id = $2 RETURNING *",
-      [id, req.userId]
+      "DELETE FROM budget_subcategories WHERE id = $1 AND user_id = $2 RETURNING *",
+      [id, req.userId],
     );
 
     if (result.rows.length === 0) {

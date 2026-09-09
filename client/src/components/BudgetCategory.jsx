@@ -162,7 +162,7 @@ const BudgetCategory = ({ budget, onBudgetChanged }) => {
   );
 
   return (
-    <div className="border border-gray-200 rounded-md p-4 shadow-md">
+    <div className=" flex flex-wrap border border-gray-200 rounded-md p-4 shadow-md">
       <div className="flex justify-between items-center mb-2">
         <h3 className="font-bold text-lg">{budget.category}</h3>
         <span className="text-sm">
@@ -249,19 +249,19 @@ const BudgetCategory = ({ budget, onBudgetChanged }) => {
       </div>
 
       {/* Custom subcategory form */}
-      <form onSubmit={addCustom} className="flex gap-2">
+      <form onSubmit={addCustom} className="flex flex-wrap justify-content space-around gap-2">
         <input
           placeholder="Custom subcategory"
           value={customName}
           onChange={(e) => setCustomName(e.target.value)}
-          className="p-1 border border-gray-300 rounded flex-1"
+          className="p-1 border border-gray-300 w-auto rounded flex-1"
         />
         <input
           type="number"
           placeholder="Amount"
           value={customAmount}
           onChange={(e) => setCustomAmount(e.target.value)}
-          className="p-1 border border-gray-300 rounded w-24"
+          className="p-1 border border-gray-300 rounded w-auto"
         />
         <button
           type="submit"

@@ -56,13 +56,12 @@ router.put("/:id", authMiddleware, async (req, res) => {
     // Confirm the expense belongs to the user
     const result = await pool.query(
       "UPDATE expenses SET description = $1, amount = $2, date = $3 WHERE id = $4 AND user_id = $5 RETURNING *",
-      [description, amount, expense_date, id, userId]
+      [description, amount, expense_date, id, userId],
     );
 
     if (!result.rows.length) {
       return res.status(404).json({ message: "Expense not found" });
     }
-
 
     res.json(result.rows[0]);
   } catch (error) {
@@ -70,3 +69,27 @@ router.put("/:id", authMiddleware, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+// Delete an expense
+router.delete("/:id", authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    const result = await pool.query(
+      "DELETE FROM expenses WHERE id = $1 AND user_id = $2 RETURNING *",
+      [id, userId]
+    );
+
+    if (!result.rows.length) {
+      return res.status(404).json({ message: "Expense not found" });
+    }
+
+    res.json({ message: "Expense deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting expense:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+module.exports = router;

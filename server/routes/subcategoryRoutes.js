@@ -8,12 +8,30 @@ router.get("/:budgetId", authMiddleware, async (req, res) => {
   try {
     const { budgetId } = req.params;
     const subcategories = await pool.query(
-      "SELECT * FROM budget_subcategories WHERE budget_id = $1 AND user_id = $2 ORDER BY name ASC",
+      "SELECT * FROM subcategories WHERE budget_id = $1 AND user_id = $2 ORDER BY name ASC",
       [budgetId, req.userId],
     );
     res.json(subcategories.rows);
   } catch (error) {
     console.error("Get subcategories error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// GET all subcategories for the logged-in user, across every budget category
+router.get("/", authMiddleware, async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT subcategories.*, budgets.category AS budget_category
+       FROM subcategories
+       JOIN budgets ON subcategories.budget_id = budgets.id
+       WHERE subcategories.user_id = $1
+       ORDER BY budgets.category ASC, subcategories.name ASC`,
+      [req.userId]
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching all subcategories:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -35,7 +53,7 @@ router.post("/", authMiddleware, async (req, res) => {
 
     // Sum existing subcategories under this budget
     const existingSubcategoriesResult = await pool.query(
-      "SELECT COALESCE(SUM(amount), 0) as total FROM budget_subcategories WHERE budget_id = $1 AND user_id = $2",
+      "SELECT COALESCE(SUM(amount), 0) as total FROM subcategories WHERE budget_id = $1 AND user_id = $2",
       [budgetId, req.userId],
     );
 
@@ -51,7 +69,7 @@ router.post("/", authMiddleware, async (req, res) => {
 
     // Insert the new subcategory if it doesn't exceed the limit
     const newSubcategory = await pool.query(
-      "INSERT INTO budget_subcategories (budget_id, user_id,name, amount) VALUES ($1, $2, $3, $4) RETURNING *",
+      "INSERT INTO subcategories (budget_id, user_id, name, amount) VALUES ($1, $2, $3, $4) RETURNING *",
       [budgetId, req.userId, name, amount],
     );
 
@@ -70,7 +88,7 @@ router.put("/:id", authMiddleware, async (req, res) => {
 
     // Get the budget_id for the subcategory being updated
     const subcategoryResult = await pool.query(
-      "SELECT budget_id FROM budget_subcategories WHERE id = $1 AND user_id = $2",
+      "SELECT budget_id FROM subcategories WHERE id = $1 AND user_id = $2",
       [id, req.userId],
     );
     if (subcategoryResult.rows.length === 0) {
@@ -93,7 +111,7 @@ router.put("/:id", authMiddleware, async (req, res) => {
 
     // Sum existing subcategories under this budget
     const existingSubcategoriesResult = await pool.query(
-      "SELECT COALESCE(SUM(amount), 0) as total FROM budget_subcategories WHERE budget_id = $1 AND user_id = $2",
+      "SELECT COALESCE(SUM(amount), 0) as total FROM subcategories WHERE budget_id = $1 AND user_id = $2",
       [budgetId, req.userId],
     );
 
@@ -113,7 +131,7 @@ router.put("/:id", authMiddleware, async (req, res) => {
 
     // Update the subcategory if it doesn't exceed the limit
     const updatedSubcategory = await pool.query(
-      "UPDATE budget_subcategories SET name = $1, amount = $2 WHERE id = $3 AND user_id = $4 RETURNING *",
+      "UPDATE subcategories SET name = $1, amount = $2 WHERE id = $3 AND user_id = $4 RETURNING *",
       [name, amount, id, req.userId],
     );
 
@@ -130,7 +148,7 @@ router.delete("/:id", authMiddleware, async (req, res) => {
     const { id } = req.params;
 
     const result = await pool.query(
-      "DELETE FROM budget_subcategories WHERE id = $1 AND user_id = $2 RETURNING *",
+      "DELETE FROM subcategories WHERE id = $1 AND user_id = $2 RETURNING *",
       [id, req.userId],
     );
 

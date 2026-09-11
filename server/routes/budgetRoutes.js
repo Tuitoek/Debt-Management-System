@@ -20,11 +20,11 @@ router.get("/", authMiddleware, async (req, res) => {
 // POST a new budget category for the logged-in user
 router.post("/", authMiddleware, async (req, res) => {
   try {
-    const { category, monthly_limit } = req.body;
+    const { category, monthly_limit, rule_name} = req.body;
 
     const newBudget = await pool.query(
-      "INSERT INTO budgets (user_id, category, monthly_limit) VALUES ($1, $2, $3) RETURNING *",
-      [req.userId, category, monthly_limit]
+      "INSERT INTO budgets (user_id, category, monthly_limit, rule_name) VALUES ($1, $2, $3, $4) RETURNING *",
+      [req.userId, category, monthly_limit, rule_name]
     );
 
     res.status(201).json(newBudget.rows[0]);
@@ -38,12 +38,12 @@ router.post("/", authMiddleware, async (req, res) => {
 router.put("/:id", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
-    const { category, monthly_limit } = req.body;
+    const { category, monthly_limit, rule_name } = req.body;
 
     const result = await pool.query(
       `UPDATE budgets
-       SET category = $1, monthly_limit = $2
-       WHERE id = $3 AND user_id = $4
+       SET category = $1, monthly_limit = $2, rule_name = $3
+       WHERE id = $4 AND user_id = $5 
        RETURNING *`,
       [category, monthly_limit, id, req.userId]
     );
@@ -66,7 +66,7 @@ router.delete("/:id", authMiddleware, async (req, res) => {
     const result = await pool.query(
       "DELETE FROM budgets WHERE id = $1 AND user_id = $2 RETURNING *",
       [id, req.userId]
-    );
+    );``
 
     if (result.rows.length === 0) {
       return res.status(404).json({ message: "Budget not found" });

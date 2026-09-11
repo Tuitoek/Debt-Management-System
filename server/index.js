@@ -14,6 +14,7 @@ const incomeRoutes = require('./routes/incomeRoutes.js');
 const budgetRoutes = require("./routes/budgetRoutes.js");
 const subcategoryRoutes = require("./routes/subcategoryRoutes.js");
 const expenseRoutes = require("./routes/expenseRoutes.js");
+const savingsRoutes = require("./routes/savingsRoutes.js");
 
 //Middleware
 app.use(cors()); //allows requests from React frontend
@@ -40,6 +41,9 @@ app.use("/api/subcategories", subcategoryRoutes);
 
 // Expense Routes
 app.use("/api/expenses", expenseRoutes);
+
+// Savings Routes
+app.use("/api/savings", savingsRoutes); 
 
 // Setting Up Database
 pool.query("SELECT NOW()", (err, res) => {

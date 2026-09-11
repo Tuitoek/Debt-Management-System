@@ -49,33 +49,47 @@ function Navbar() {
           {user ? (
             <>
               <Link to="/dashboard" className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faGauge} className="mr-2" /> <h2>Dashboard</h2>
+                <FontAwesomeIcon icon={faGauge} className="mr-2" />{" "}
+                <h2>Dashboard</h2>
               </Link>
               <Link to="/profile" className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faUser} className="mr-2" /> <h2>Profile</h2>
+                <FontAwesomeIcon icon={faUser} className="mr-2" />{" "}
+                <h2>Profile</h2>
               </Link>
               <Link to="/income" className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faMoneyBill} className="mr-2" /> <h2>Income</h2>
+                <FontAwesomeIcon icon={faMoneyBill} className="mr-2" />{" "}
+                <h2>Income</h2>
               </Link>
               <Link to="/debts" className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faCreditCard} className="mr-2" /> <h2>Debts</h2>
+                <FontAwesomeIcon icon={faCreditCard} className="mr-2" />{" "}
+                <h2>Debts</h2>
               </Link>
               <Link to="/budget" className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faWallet} className="mr-2" /> <h2>Budget</h2>
+                <FontAwesomeIcon icon={faWallet} className="mr-2" />{" "}
+                <h2>Budget</h2>
               </Link>
               <Link to="/expenses" className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faPiggyBank} className="mr-2" /> <h2>Expenses</h2>
-          </Link>
-                            <Link to="/savings" className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faMoneyBill1Wave} className="mr-2" /> <h2>Savings</h2>
+                <FontAwesomeIcon icon={faPiggyBank} className="mr-2" />{" "}
+                <h2>Expenses</h2>
               </Link>
-              <button onClick={handleLogout} className="flex items-center gap-2 text-red-700">
-                <FontAwesomeIcon icon={faRightFromBracket} className="mr-2" /> <h2>Log Out</h2>
+              <Link to="/savings" className="flex items-center gap-2">
+                <FontAwesomeIcon icon={faMoneyBill1Wave} className="mr-2" />{" "}
+                <h2>Savings</h2>
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 text-red-700"
+              >
+                <FontAwesomeIcon icon={faRightFromBracket} className="mr-2" />{" "}
+                <h2>Log Out</h2>
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className="flex items-center gap-2 p-4 border-blue-300 rounded-lg font-semibold">
+              <Link
+                to="/login"
+                className="flex items-center gap-2 p-4 border-blue-300 rounded-lg font-semibold"
+              >
                 <h2>Log In</h2>
               </Link>
               <Link to="/signup" className="flex items-center gap-2">
@@ -90,38 +104,81 @@ function Navbar() {
         <div className="min-[1080px]:hidden flex flex-col gap-4 mt-4 pt-4 border-t border-white/40">
           {user ? (
             <>
-              <Link to="/dashboard" className="flex items-center gap-2" onClick={closeMenu}>
-                <FontAwesomeIcon icon={faGauge} className="mr-2" /> <h2>Dashboard</h2>
+              <Link
+                to="/dashboard"
+                className="flex items-center gap-2"
+                onClick={closeMenu}
+              >
+                <FontAwesomeIcon icon={faGauge} className="mr-2" />{" "}
+                <h2>Dashboard</h2>
               </Link>
-              <Link to="/profile" className="flex items-center gap-2" onClick={closeMenu}>
-                <FontAwesomeIcon icon={faUser} className="mr-2" /> <h2>Profile</h2>
+              <Link
+                to="/profile"
+                className="flex items-center gap-2"
+                onClick={closeMenu}
+              >
+                <FontAwesomeIcon icon={faUser} className="mr-2" />{" "}
+                <h2>Profile</h2>
               </Link>
-              <Link to="/income" className="flex items-center gap-2" onClick={closeMenu}>
-                <FontAwesomeIcon icon={faMoneyBill} className="mr-2" /> <h2>Income</h2>
+              <Link
+                to="/income"
+                className="flex items-center gap-2"
+                onClick={closeMenu}
+              >
+                <FontAwesomeIcon icon={faMoneyBill} className="mr-2" />{" "}
+                <h2>Income</h2>
               </Link>
-              <Link to="/debts" className="flex items-center gap-2" onClick={closeMenu}>
-                <FontAwesomeIcon icon={faCreditCard} className="mr-2" /> <h2>Debts</h2>
+              <Link
+                to="/debts"
+                className="flex items-center gap-2"
+                onClick={closeMenu}
+              >
+                <FontAwesomeIcon icon={faCreditCard} className="mr-2" />{" "}
+                <h2>Debts</h2>
               </Link>
-              <Link to="/budget" className="flex items-center gap-2" onClick={closeMenu}>
-                <FontAwesomeIcon icon={faWallet} className="mr-2" /> <h2>Budget</h2>
+              <Link
+                to="/budget"
+                className="flex items-center gap-2"
+                onClick={closeMenu}
+              >
+                <FontAwesomeIcon icon={faWallet} className="mr-2" />{" "}
+                <h2>Budget</h2>
               </Link>
-              <Link to="/expenses" className="flex items-center gap-2" onClick={closeMenu}>
-                <FontAwesomeIcon icon={faPiggyBank} className="mr-2" /> <h2>Expenses</h2>
+              <Link
+                to="/expenses"
+                className="flex items-center gap-2"
+                onClick={closeMenu}
+              >
+                <FontAwesomeIcon icon={faPiggyBank} className="mr-2" />{" "}
+                <h2>Expenses</h2>
               </Link>
-           
-                <Link to="/savings" className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faMoneyBill1Wave} className="mr-2" /> <h2>Savings</h2>
+
+              <Link to="/savings" className="flex items-center gap-2">
+                <FontAwesomeIcon icon={faMoneyBill1Wave} className="mr-2" />{" "}
+                <h2>Savings</h2>
               </Link>
-              <button onClick={handleLogout} className="flex items-center gap-2 text-red-700">
-                <FontAwesomeIcon icon={faRightFromBracket} className="mr-2" /> <h2>Log Out</h2>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 text-red-700"
+              >
+                <FontAwesomeIcon icon={faRightFromBracket} className="mr-2" />{" "}
+                <h2>Log Out</h2>
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className="flex items-center gap-2" onClick={closeMenu}>
+              <Link
+                to="/login"
+                className="flex items-center gap-2"
+                onClick={closeMenu}
+              >
                 <h2>Log In</h2>
               </Link>
-              <Link to="/signup" className="flex items-center gap-2" onClick={closeMenu}>
+              <Link
+                to="/signup"
+                className="flex items-center gap-2"
+                onClick={closeMenu}
+              >
                 <h2>Sign Up</h2>
               </Link>
             </>

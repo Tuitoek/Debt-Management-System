@@ -19,6 +19,7 @@ import Income from "./pages/Income";
 import Budget from './pages/Budget';
 import Expenses from './pages/Expense';
 import Savings from './pages/Savings';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   // Calculate net salary via backend API
@@ -82,6 +83,14 @@ function App() {
         element={
           <ProtectedRoute>
             <Savings />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
           </ProtectedRoute>
         }
       />

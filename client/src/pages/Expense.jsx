@@ -5,7 +5,12 @@ function Expenses() {
   const { token } = useAuth();
   const [expenses, setExpenses] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
-  const [form, setForm] = useState({ subcategory_id: "", description: "", amount: "", expense_date: "" });
+  const [form, setForm] = useState({
+    subcategory_id: "",
+    description: "",
+    amount: "",
+    expense_date: "",
+  });
   const [error, setError] = useState("");
 
   const fetchAllExpenses = async () => {
@@ -63,8 +68,18 @@ function Expenses() {
         setError(data.message || "Failed to add expense");
         return;
       }
+      if (data.matchedGoal) {
+        alert(
+          `✅ Also added KES ${amount} to your "${data.matchedGoal.goal_name}" savings goal!`,
+        );
+      }
 
-      setForm({ subcategory_id: "", description: "", amount: "", expense_date: "" });
+      setForm({
+        subcategory_id: "",
+        description: "",
+        amount: "",
+        expense_date: "",
+      });
       fetchAllExpenses();
     } catch (err) {
       console.error("Add expense error:", err);
@@ -91,7 +106,8 @@ function Expenses() {
       <h2 className="text-2xl font-bold">Expense Tracker</h2>
 
       <p className="text-lg">
-        Total spent (all categories): <strong>KES {totalSpent.toLocaleString()}</strong>
+        Total spent (all categories):{" "}
+        <strong>KES {totalSpent.toLocaleString()}</strong>
       </p>
 
       {/* Add expense form */}
@@ -112,7 +128,8 @@ function Expenses() {
           <option value="">Select a subcategory</option>
           {subcategories.map((sub) => (
             <option key={sub.id} value={sub.id}>
-              {sub.budget_category} → {sub.name} (budgeted KES {Number(sub.amount).toLocaleString()})
+              {sub.budget_category} → {sub.name} (budgeted KES{" "}
+              {Number(sub.amount).toLocaleString()})
             </option>
           ))}
         </select>
@@ -141,7 +158,10 @@ function Expenses() {
           className="p-2 border border-gray-300 rounded"
         />
 
-        <button type="submit" className="p-2 bg-blue-900 text-white rounded font-bold">
+        <button
+          type="submit"
+          className="p-2 bg-blue-900 text-white rounded font-bold"
+        >
           Add Expense
         </button>
       </form>
@@ -165,7 +185,10 @@ function Expenses() {
                   {new Date(exp.expense_date).toLocaleDateString()}
                 </small>
               </span>
-              <button onClick={() => handleDelete(exp.id)} className="text-red-700 font-semibold">
+              <button
+                onClick={() => handleDelete(exp.id)}
+                className="text-red-700 font-semibold"
+              >
                 Delete
               </button>
             </div>

@@ -42,27 +42,45 @@ router.post("/", authMiddleware, async (req, res) => {
   try {
     const { subcategory_id, description, amount, expense_date } = req.body;
 
-    // Confirm the subcategory belongs to the user
+    // Confirm the subcategory belongs to the user, and get its parent budget category + name
     const subResult = await pool.query(
-      "SELECT * FROM subcategories WHERE id = $1 AND user_id = $2",
+      `SELECT subcategories.*, budgets.category AS budget_category
+       FROM subcategories
+       JOIN budgets ON subcategories.budget_id = budgets.id
+       WHERE subcategories.id = $1 AND subcategories.user_id = $2`,
       [subcategory_id, req.userId]
     );
+
     if (subResult.rows.length === 0) {
       return res.status(404).json({ message: "Subcategory not found" });
     }
 
+    const sub = subResult.rows[0];
+
+    // Insert the expense as usual
     const newExpense = await pool.query(
       "INSERT INTO expenses (subcategory_id, user_id, amount, description, expense_date) VALUES ($1, $2, $3, $4, $5) RETURNING *",
       [subcategory_id, req.userId, amount, description, expense_date || new Date()]
     );
 
-    res.status(201).json(newExpense.rows[0]);
+    // If this subcategory is under "Savings", try to auto-contribute to a matching goal
+    let matchedGoal = null;
+    if (sub.budget_category.toLowerCase().includes("saving")) {
+      const goalResult = await pool.query(
+        "UPDATE savings SET saved_amount = saved_amount + $1 WHERE user_id = $2 AND LOWER(goal_name) = LOWER($3) RETURNING *",
+        [amount, req.userId, sub.name]
+      );
+      if (goalResult.rows.length > 0) {
+        matchedGoal = goalResult.rows[0];
+      }
+    }
+
+    res.status(201).json({ ...newExpense.rows[0], matchedGoal });
   } catch (error) {
     console.error("Error adding expense:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
 // UPDATE an existing expense
 router.put("/:id", authMiddleware, async (req, res) => {
   try {

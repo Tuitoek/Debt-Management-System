@@ -13,6 +13,7 @@ import {
   faRightFromBracket,
   faBars,
   faXmark,
+  faMoneyBill1Wave,
 } from "@fortawesome/free-solid-svg-icons";
 
 function Navbar() {
@@ -64,6 +65,9 @@ function Navbar() {
               </Link>
               <Link to="/expenses" className="flex items-center gap-2">
                 <FontAwesomeIcon icon={faPiggyBank} className="mr-2" /> <h2>Expenses</h2>
+          </Link>
+                            <Link to="/savings" className="flex items-center gap-2">
+                <FontAwesomeIcon icon={faMoneyBill1Wave} className="mr-2" /> <h2>Savings</h2>
               </Link>
               <button onClick={handleLogout} className="flex items-center gap-2 text-red-700">
                 <FontAwesomeIcon icon={faRightFromBracket} className="mr-2" /> <h2>Log Out</h2>
@@ -103,6 +107,10 @@ function Navbar() {
               </Link>
               <Link to="/expenses" className="flex items-center gap-2" onClick={closeMenu}>
                 <FontAwesomeIcon icon={faPiggyBank} className="mr-2" /> <h2>Expenses</h2>
+              </Link>
+           
+                <Link to="/savings" className="flex items-center gap-2">
+                <FontAwesomeIcon icon={faMoneyBill1Wave} className="mr-2" /> <h2>Savings</h2>
               </Link>
               <button onClick={handleLogout} className="flex items-center gap-2 text-red-700">
                 <FontAwesomeIcon icon={faRightFromBracket} className="mr-2" /> <h2>Log Out</h2>

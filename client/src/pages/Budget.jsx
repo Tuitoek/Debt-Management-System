@@ -45,7 +45,10 @@ const Budget = () => {
       });
       const data = await res.json();
       if (Array.isArray(data)) {
-        const total = data.reduce((sum, entry) => sum + Number(entry.amount), 0);
+        const total = data.reduce(
+          (sum, entry) => sum + Number(entry.amount),
+          0,
+        );
         setTotalIncome(total);
       }
     } catch (err) {
@@ -109,6 +112,13 @@ const Budget = () => {
     const split = RULES[selectedRule];
 
     try {
+      // 1. Clear out any previously applied rule's categories first
+      await fetch("http://localhost:5000/api/budget/rule-categories", {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      // 2. Create the new rule's categories, tagged with rule_name
       for (const item of split) {
         const monthly_limit = (totalIncome * item.percent) / 100;
         await fetch("http://localhost:5000/api/budget", {
@@ -117,7 +127,11 @@ const Budget = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ category: item.label, monthly_limit }),
+          body: JSON.stringify({
+            category: item.label,
+            monthly_limit,
+            rule_name: selectedRule,
+          }),
         });
       }
       fetchBudgets();
@@ -179,7 +193,8 @@ const Budget = () => {
       <h2 className="text-2xl font-bold">Budget Planner</h2>
 
       <p className="text-lg">
-        Your total recorded income: <strong>KES {totalIncome.toLocaleString()}</strong>
+        Your total recorded income:{" "}
+        <strong>KES {totalIncome.toLocaleString()}</strong>
       </p>
 
       {/* Rule picker */}
@@ -200,7 +215,6 @@ const Budget = () => {
             </button>
           ))}
         </div>
-     
 
         {/* Live preview of the split */}
         <div className="flex flex-col gap-1 mb-4 p-5 text-gray-700 font-semibold">
@@ -217,7 +231,15 @@ const Budget = () => {
         {error && <p style={{ color: "red" }}>{error}</p>}
 
         <button
-          onClick={applyRule}
+          onClick={() => {
+            if (
+              window.confirm(
+                "Applying a new rule will delete your previous rule's categories, subcategories, and expenses (custom categories will be kept). Continue?",
+              )
+            ) {
+              applyRule();
+            }
+          }}
           className="w-full p-2 bg-green-700 text-white rounded font-bold"
         >
           Apply This Rule
@@ -277,9 +299,12 @@ const Budget = () => {
                   Delete Category
                 </button>
               </div>
-              <BudgetCategoryCard budget={budget} onBudgetsChanged={fetchBudgets} />
+              <BudgetCategoryCard
+                budget={budget}
+                onBudgetsChanged={fetchBudgets}
+              />
             </div>
-          )
+          ),
         )}
       </div>
     </div>

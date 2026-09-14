@@ -14,15 +14,17 @@ function NetSalary({ result }) {
   // Avoid rendering if result is null or undefined
   if (!result) return null;
 
-  const { gross, nssf, shif, housingLevy, paye, netSalary, totalDeductions } = result;
+  const { gross, nssf, shif, housingLevy, paye, netSalary, totalDeductions } =
+    result;
 
   return (
     <div className="w-full max-w-md h-auto rounded-lg bg-white shadow-md p-6 m-3 flex flex-col gap-4">
-      <h2 className="font-bold text-2xl text-center text-gray-800">Net Salary Breakdown</h2>
+      <h2 className="font-bold text-2xl text-center text-gray-800">
+        Net Salary Breakdown
+      </h2>
       <p className="font-light text-sm text-center text-gray-500 mb-2">
         Based on official Kenyan statutory rates
       </p>
-
       {/* Gross Salary */}
       <div className="text-lg w-full shadow-sm border p-3 rounded-lg flex items-center justify-between">
         <span className="flex items-center gap-2 font-medium">
@@ -48,7 +50,10 @@ function NetSalary({ result }) {
       {/* SHIF */}
       <div className="text-base w-full shadow-sm border p-3 rounded-lg flex items-center justify-between">
         <span className="flex items-center gap-2 font-medium text-gray-700">
-          <FontAwesomeIcon icon={faHandHoldingMedical} className="text-red-500" />
+          <FontAwesomeIcon
+            icon={faHandHoldingMedical}
+            className="text-red-500"
+          />
           <span>SHIF Deduction:</span>
         </span>
         <span className="font-medium text-red-600">

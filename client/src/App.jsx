@@ -2,16 +2,9 @@ import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./components/Home";
-import LandingHero from "./components/LandingHero";
-import SalaryCalculator from "./components/SalaryCalculator";
 import Navbar from "./components/Navbar";
-import NetSalary from "./components/NetSalary";
 import Debts from './pages/Debts';
-import DebtForm from "./components/DebtForm";
 import Login from "./components/LogIn";
-import LogInButton from "./components/LogInButton";
-import SignUpButton from "./components/SignUpButton";
-import { useAuth } from "./context/AuthContext";
 import "./App.css";
 import SignUp from "./components/SignUp";
 import Profile from "./pages/Profile";
@@ -20,6 +13,7 @@ import Budget from './pages/Budget';
 import Expenses from './pages/Expense';
 import Savings from './pages/Savings';
 import Dashboard from './pages/Dashboard';
+import Paye from './pages/Paye';
 
 function App() {
   // Calculate net salary via backend API
@@ -38,6 +32,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/payecalculator" element={<Paye />} />
       <Route
         path="/profile"
         element={
@@ -94,6 +89,7 @@ function App() {
           </ProtectedRoute>
         }
       />
+   
     </Routes>
      
     </>

@@ -86,6 +86,13 @@ function Navbar() {
             </>
           ) : (
             <>
+            
+              <Link
+                to="/payecalculator"
+                className="flex items-center gap-2 p-4 border-blue-300 rounded-lg font-semibold"
+              >
+                <h2>Paye Calculator</h2>
+              </Link>
               <Link
                 to="/login"
                 className="flex items-center gap-2 p-4 border-blue-300 rounded-lg font-semibold"
@@ -167,6 +174,13 @@ function Navbar() {
             </>
           ) : (
             <>
+             <Link
+                to="/payecalculator"
+                className="flex items-center gap-2"
+                onClick={closeMenu}
+              >
+                <h2>Paye Calculator</h2>
+              </Link>
               <Link
                 to="/login"
                 className="flex items-center gap-2"
@@ -181,6 +195,7 @@ function Navbar() {
               >
                 <h2>Sign Up</h2>
               </Link>
+             
             </>
           )}
         </div>

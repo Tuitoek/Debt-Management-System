@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../db");
+const pool = require("../db/db");
 const authMiddleware = require("../middleware/authMiddleware");
 
 // GET all savings goals for the logged-in user

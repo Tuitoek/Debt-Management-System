@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 db.js
 .env
+.agents
+.claude
+.cursor
+.devin
+prisma.config.ts

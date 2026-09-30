@@ -15,7 +15,7 @@ function Expenses() {
 
   const fetchAllExpenses = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/expenses", {
+      const res = await fetch("/api/expenses", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -28,7 +28,7 @@ function Expenses() {
 
   const fetchAllSubcategories = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/subcategories", {
+      const res = await fetch("/api/subcategories", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -53,7 +53,7 @@ function Expenses() {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/expenses", {
+      const res = await fetch("/api/expenses", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +89,7 @@ function Expenses() {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/expenses/${id}`, {
+      await fetch(`/api/expenses/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });

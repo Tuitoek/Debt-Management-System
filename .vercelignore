@@ -1,0 +1,6 @@
+.agents
+.claude
+.cursor.devin
+server/node_modules
+client/node_modules
+schema.sql

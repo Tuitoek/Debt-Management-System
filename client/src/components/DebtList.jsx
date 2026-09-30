@@ -20,7 +20,7 @@ function Debtlist({ refreshSignal }) {
   const [editForm, setEditForm] = useState({});
 
   const fetchDebts = () => {
-    fetch("http://localhost:5000/api/debts", {
+    fetch("/api/debts", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
@@ -40,7 +40,7 @@ function Debtlist({ refreshSignal }) {
   }, [refreshSignal]);
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/api/debts/${id}`, {
+    fetch(`/api/debts/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -70,7 +70,7 @@ function Debtlist({ refreshSignal }) {
   };
 
   const saveEdit = (id) => {
-    fetch(`http://localhost:5000/api/debts/${id}`, {
+    fetch(`/api/debts/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -15,7 +15,7 @@ const Income = () => {
   // Fetch Income when page loads
   const fetchIncome = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/income", {
+      const res = await fetch("/api/income", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -45,7 +45,7 @@ const Income = () => {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/income", {
+      const res = await fetch("/api/income", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,7 +79,7 @@ const Income = () => {
   // Handle delete
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/income/${id}`, {
+      await fetch(`/api/income/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });

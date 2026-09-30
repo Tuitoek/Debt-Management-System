@@ -22,7 +22,7 @@ const DebtForm = ({ onDebtAdded }) => {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/debts", {
+      const res = await fetch("/api/debts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

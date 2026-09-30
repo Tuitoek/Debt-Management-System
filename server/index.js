@@ -45,13 +45,4 @@ app.use("/api/expenses", expenseRoutes);
 // Savings Routes
 app.use("/api/savings", savingsRoutes); 
 
-// Setting Up Database
-pool.query("SELECT NOW()", (err, res) => {
-  if (err) {
-    console.error("Connection error:", err);
-  } else {
-    console.log("Connected to Postgres at:", res.rows[0].now);
-  }
-});
-
 module.exports = app;

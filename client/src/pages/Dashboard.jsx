@@ -14,11 +14,11 @@ function Dashboard() {
   const fetchAll = async () => {
     try {
       const [incomeRes, budgetRes, expenseRes, debtRes, savingsRes] = await Promise.all([
-        fetch("http://localhost:5000/api/income", { headers: authHeader }),
-        fetch("http://localhost:5000/api/budget", { headers: authHeader }),
-        fetch("http://localhost:5000/api/expenses", { headers: authHeader }),
-        fetch("http://localhost:5000/api/debts", { headers: authHeader }),
-        fetch("http://localhost:5000/api/savings", { headers: authHeader }),
+        fetch("/api/income", { headers: authHeader }),
+        fetch("/api/budget", { headers: authHeader }),
+        fetch("/api/expenses", { headers: authHeader }),
+        fetch("/api/debts", { headers: authHeader }),
+        fetch("/api/savings", { headers: authHeader }),
       ]);
 
       const incomeData = await incomeRes.json();

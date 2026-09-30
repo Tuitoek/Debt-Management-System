@@ -40,7 +40,7 @@ const Budget = () => {
 
   const fetchIncomeTotal = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/income", {
+      const res = await fetch("/api/income", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -58,7 +58,7 @@ const Budget = () => {
 
   const fetchBudgets = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/budget", {
+      const res = await fetch("/api/budget", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -83,7 +83,7 @@ const Budget = () => {
     e.preventDefault();
     setError("");
     try {
-      const res = await fetch("http://localhost:5000/api/budget", {
+      const res = await fetch("/api/budget", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -113,7 +113,7 @@ const Budget = () => {
 
     try {
       // 1. Clear out any previously applied rule's categories first
-      await fetch("http://localhost:5000/api/budget/rule-categories", {
+      await fetch("/api/budget/rule-categories", {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -121,7 +121,7 @@ const Budget = () => {
       // 2. Create the new rule's categories, tagged with rule_name
       for (const item of split) {
         const monthly_limit = (totalIncome * item.percent) / 100;
-        await fetch("http://localhost:5000/api/budget", {
+        await fetch("/api/budget", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -142,7 +142,7 @@ const Budget = () => {
   };
 
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:5000/api/budget/${id}`, {
+    await fetch(`/api/budget/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -168,7 +168,7 @@ const Budget = () => {
 
   const saveEdit = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/budget/${id}`, {
+      const res = await fetch(`/api/budget/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

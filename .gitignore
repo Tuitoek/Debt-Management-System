@@ -29,3 +29,6 @@ db.js
 .cursor
 .devin
 prisma.config.ts
+
+.vercel
+.env*
